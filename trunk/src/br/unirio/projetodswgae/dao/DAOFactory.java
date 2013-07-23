@@ -1,10 +1,35 @@
 package br.unirio.projetodswgae.dao;
 
+import br.unirio.projetodswgae.dao.UsuarioDAO;
+import br.unirio.projetodswgae.dao.UsuarioLoginDAO;
+import br.unirio.projetodswgae.dao.UsuarioTokenSenhaDAO;
+
 public class DAOFactory {
+	private static UsuarioDAO usuarioDAO;
+	private static UsuarioLoginDAO loginUsuarioDAO;
+	private static UsuarioTokenSenhaDAO tokenSenhaUsuarioDAO;
 
-	public static Object getUsuarioDAO() {
-		// TODO Auto-generated method stub
-		return null;
+	public static UsuarioDAO getUsuarioDAO()
+	{
+		if (usuarioDAO == null)
+			usuarioDAO = new UsuarioDAO();
+		
+		return usuarioDAO;
 	}
-
+	
+	public static UsuarioLoginDAO getUsuarioLoginDAO()
+	{
+		if (loginUsuarioDAO == null)
+			loginUsuarioDAO = new UsuarioLoginDAO();
+		
+		return loginUsuarioDAO;
+	}
+	
+	public static UsuarioTokenSenhaDAO getUsuarioTokenSenhaDAO()
+	{
+		if (tokenSenhaUsuarioDAO == null)
+			tokenSenhaUsuarioDAO = new UsuarioTokenSenhaDAO();
+		
+		return tokenSenhaUsuarioDAO;
+	}
 }
