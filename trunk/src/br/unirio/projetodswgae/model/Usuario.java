@@ -25,7 +25,7 @@ public class Usuario implements IUser, DataObject {
 		this.tipoUsuario = TipoUsuario.USUARIO_FINAL;
 		this.ativo = true;
 		this.setForcaResetSenha(false);
-		this.deveTrocarSenha = true;
+		this.deveTrocarSenha = false;
 	}
 
 	@Override
