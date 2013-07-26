@@ -43,6 +43,6 @@ td { width: 350px; }
 		</td></tr>
 		</table>		
 
-		<input type="submit" name="btSubmit" value="Enviar Dados" /><br>
+		<input type="submit" name="btSubmit" value="Enviar Dados" class="btn btn-primary"/><br>
 	</form>
 </div>
