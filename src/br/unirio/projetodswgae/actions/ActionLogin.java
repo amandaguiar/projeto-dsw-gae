@@ -358,6 +358,6 @@ public class ActionLogin extends Action {
 
 		// Salva os dados do usuário
 		DAOFactory.getUsuarioDAO().put(usuario);
-		return addRedirectNotice("Usuário cadastrado com sucesso");
+		return addRedirectNotice("Usuario cadastrado com sucesso");
 	}
 }
