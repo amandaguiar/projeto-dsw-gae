@@ -306,8 +306,8 @@ public class ActionLogin extends Action {
 	}
 
 	/**
-	 * Ação de salvamento dos dados de um indivíduo migrado para operador
-	 *//*
+	 * Ação de salvamento dos dados de um usuário
+	 */
 	@DisableUserVerification
 	@SuccessRedirect("/login/login.do")
 	@Error("/jsp/login/novo.jsp")
@@ -324,101 +324,40 @@ public class ActionLogin extends Action {
 
 		// Captura os dados do formulário
 		usuario.setNome(getParameter("nome", ""));
+		usuario.setSobrenome(getParameter("sobrenome", ""));
 		usuario.setEmail(getParameter("email", ""));
-		usuario.setEndereco(getParameter("endereco", ""));
-		usuario.setComplemento(getParameter("complemento", ""));
-		usuario.setEstado(getParameter("estado", ""));
-		usuario.setMunicipio(getParameter("municipio", ""));
-		usuario.setCEP(getParameter("cep", ""));
-		usuario.setNacionalidade(getParameter("nacionalidade", ""));
-		usuario.setSexo(Sexo.get(getParameter("sexo", "")));
-		usuario.setDataNascimento(getDateParameter("dataNascimento"));
-		usuario.setCPF(getParameter("cpf", ""));
-		usuario.setIdentidade(getParameter("identidade", ""));
-		usuario.setEmissorIdentidade(getParameter("emissorIdentidade", ""));
-		usuario.setTituloEleitor(getParameter("tituloEleitor", ""));
-		usuario.setInscricaoPoscomp(getParameter("inscricaoPoscomp", ""));
-		usuario.setTelefoneFixo(getParameter("telefoneFixo", ""));
-		usuario.setTelefoneCelular(getParameter("telefoneCelular", ""));
-		usuario.setNomeCurso(getParameter("nomeCurso", ""));
-		usuario.setUniversidade(Universidade.get(getParameter("universidade", "")));
-		usuario.setAnoConclusao(getIntParameter("anoConclusao", 0));
-		usuario.setInstituicao(getParameter("instituicao", ""));
-		usuario.setCargo(getParameter("cargo", ""));
-		usuario.setTempoEmpresa(getIntParameter("tempoEmpresa", 0));
 
+		String senha = getParameter("senha", "");
+		
+		if (usuario.getId() <= 0 && !senha.isEmpty())
+		{
+			senha = getParameter("senha", "");
+			usuario.setSenha(Configuracao.getAmbienteHomologacao() ? senha : Crypto.hash(senha));
+			
+			/*if (!Configuracao.getAmbienteHomologacao())
+				check(enviaSenhaUsuario(usuario, senha), "Ocorreram problemas no envio dos dados para o seu e-mail");*/
+		}
+		
 		// Verifica as regras de negócio
 		checkNonEmpty(usuario.getNome(), "O nome do usuário não pode ser vazio");
 		checkLength(usuario.getNome(), 80, "O nome do usuário");
 
+		checkNonEmpty(usuario.getSobrenome(), "O Sobrenome do usuário não pode ser vazio");
+		checkLength(usuario.getSobrenome(), 80, "O Sobrenome do usuário");
+		
 		checkNonEmpty(usuario.getEmail(), "O e-mail do usuário não pode ser vazio");
 		checkLength(usuario.getEmail(), 80, "O e-mail do usuário");
 		checkEmail(usuario.getEmail(), "O e-mail do usuário não está seguindo um formato válido");
 
-		checkNonEmpty(usuario.getEndereco(), "O endereço não pode ser vazio");
-		checkLength(usuario.getEndereco(), 80, "O endereço");
-
-		checkLength(usuario.getComplemento(), 80, "O complemento do endereço");
-
-		checkNonEmpty(usuario.getEstado(), "Selecione o estado do usuário");
-		checkLength(usuario.getEstado(), 2, "O estado do usuário");
-
-		checkNonEmpty(usuario.getMunicipio(), "Selecione o município do usuário");
-		checkLength(usuario.getMunicipio(), 80, "O município do usuário");
-
-		checkNonEmpty(usuario.getCEP(), "O CEP do usuário não pode ser vazio");
-		checkLength(usuario.getCEP(), 10, "O CEP do usuário");
-
-		checkNonEmpty(usuario.getNacionalidade(), "A nacionalidade do usuário não pode ser vazia");
-		checkLength(usuario.getNacionalidade(), 20, "A nacionalidade do usuário");
-
-		check(usuario.getSexo() != null, "Selecione o sexo do usuário");
-		check(usuario.getDataNascimento() != null, "Selecione a data de nascimento do usuário");
-
-		checkNonEmpty(usuario.getCPF(), "O CPF do usuário não pode ser vazio");
-		check(Validators.validaCPF(usuario.getCPF()), "O CPF do usuário não é válido");
-
-		checkNonEmpty(usuario.getIdentidade(), "A identidade do usuário não pode ser vazia");
-		checkLength(usuario.getIdentidade(), 20, "A identidade do usuário");
-
-		checkNonEmpty(usuario.getEmissorIdentidade(), "O emissor da identidade do usuário não pode ser vazio");
-		checkLength(usuario.getEmissorIdentidade(), 20, "O emissor da identidade do usuário");
-
-		checkNonEmpty(usuario.getTituloEleitor(), "O título de eleitor do usuário não pode ser vazio");
-		checkLength(usuario.getTituloEleitor(), 20, "O título de eleitor do usuário");
-
-		checkLength(usuario.getInscricaoPoscomp(), 20, "A inscrição do POSCOMP do usuário");
-
-		checkNonEmpty(usuario.getTelefoneFixo(), "O telefone fixo do usuário não pode ser vazio");
-		checkLength(usuario.getTelefoneFixo(), 20, "O telefone fixo do usuário");
-		checkPhone(usuario.getTelefoneFixo(), "O telefone fixo do usuário está com um formato inválido");
-
-		checkNonEmpty(usuario.getTelefoneCelular(), "O telefone celular do usuário não pode ser vazio");
-		checkLength(usuario.getTelefoneCelular(), 20, "O telefone celular do usuário");
-		checkPhone(usuario.getTelefoneCelular(), "O telefone celular do usuário está com um formato inválido");
-
-		checkNonEmpty(usuario.getNomeCurso(), "O nome do curso do usuário não pode ser vazio");
-		checkLength(usuario.getNomeCurso(), 40, "O nome do curso do usuário");
-
-		check(usuario.getUniversidade() != null, "Selecione a universidade onde o usuário fez seu curso");
-
 		Usuario usuario2 = DAOFactory.getUsuarioDAO().getUsuarioEmail(usuario.getEmail());
 		check(usuario2 == null || usuario2.getId() == usuario.getId(), "Já existe um usuário com esse e-mail");
 
-		Usuario usuario3 = DAOFactory.getUsuarioDAO().getUsuarioCPF(usuario.getCPF());
-		check(usuario3 == null || usuario3.getId() == usuario.getId(), "Já existe um usuário com esse CPF");
-
-		if (usuario.getId() <= 0)
-		{
-			String senha = criaSenhaAleatoria();
-			usuario.setSenhaCodificada(Configuracao.getAmbienteHomologacao() ? senha : Crypto.hash(senha));
-			
-			if (!Configuracao.getAmbienteHomologacao())
-				check(enviaSenhaUsuario(usuario, senha), "Ocorreram problemas no envio dos dados para o seu e-mail");
-		}
+		checkNonEmpty(usuario.getSenha(), "A senha do usuário não pode ser vazia");
+		String confirmacao_senha = getParameter("confirmacao_senha", "");
+		check(senha.equals(confirmacao_senha), "As senhas digitadas não são iguais");
 
 		// Salva os dados do usuário
 		DAOFactory.getUsuarioDAO().put(usuario);
-		return addRedirectNotice("usuario.cadastrado.sucesso");
-	}*/
+		return addRedirectNotice("Usuário cadastrado com sucesso");
+	}
 }
