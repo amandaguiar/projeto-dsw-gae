@@ -27,6 +27,10 @@
 </head>
 <body>
 
+<%
+	pageContext.setAttribute("usuarioLogado", AuthenticationService.getUser(request));
+%>
+
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container-fluid">
@@ -36,36 +40,41 @@
 				<span class="icon-bar"></span>
 			</button>
 			
-			<a class="brand" href="javascript:void(0);">Projeto DSW</a>			
-			
+			<a class="brand" href="../../index.html">Projeto DSW</a>	
+					
+			<mvc:checkLogged>
+			<div class="nav-collapse collapse">
+				<p class="navbar-text pull-right">
+					Olá, <c:out value="${usuarioLogado.nome}"/>! | <a href="/login/preparaTrocaSenha.do">Troca Senha</a> | <a href="/login/logout.do">Logout</a>
+				</p>
+				<ul class="nav">
+				</ul>
+			</div>
+			</mvc:checkLogged>
 		</div>
 	</div>
 </div>
-<div class="container-fluid">
-	<div class="row-fluid">
 	
-	</div>
-</div>	
 
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="span3">
+		<div class="span2">
 			<mvc:checkLogged>
 				<div class="well sidebar-nav">
 					<ul class="nav nav-list">
-						<li><a href="/login/homepage.do">Homepage</a></li>
+						<li class="active"><a href="/login/homepage.do">Início</a></li>
 						
 						<mvc:checkUserLevel level="ADM">
 						<li class="nav-header">Administração</li>
-						<li><a href="#">Abre edital</a></li>
-						<li><a href="#">Fecha edital</a></li>
-						<li><a href="#">Relatório de inscritos</a></li>
+						<li><a href="#">Sistemas</a></li>
+						<li><a href="#">Componentes</a></li>
+						<li><a href="#">Tickets</a></li>
 						</mvc:checkUserLevel>
 
 						<mvc:checkUserLevel level="ADM" type="none">
 						<li class="nav-header">Meus dados</li>
 						<li><a href="#">Meu Perfil</a></li>
-						<li><a href="#">Minha inscrição</a></li>
+						<li><a href="#">Meus tickets</a></li>
 						</mvc:checkUserLevel>
 					</ul>
 				</div>
@@ -79,12 +88,12 @@
 						<input type="text" name="email" id="emailLoginField" />
 						
 						<label for="pwd">Senha:</label>
-						<input type="password" name="pwd" /><br>
-						<input type="submit" name="Submit" value="Login">
+						<input type="password" name="pwd" /><br />
+						<input type="submit" name="Submit" value="Login" class="btn btn-primary">
 					</form>
 					
 					<ul>
-						<li><a href="/jsp/login/esqueceuSenha.jsp">Esqueceu sua senha?</a></li>
+						<li><a href="/jsp/login/esqueceuSenha.jsp">Esqueci minha senha</a></li>
 						<li><a href="/login/novo.do">Criar conta no sistema</a></li>
 					</ul>
 				</div>
@@ -114,7 +123,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	//$("#emailLoginField").focus();
+	$("#emailLoginField").focus();
 	var content = $("#content");
 	if (content) $("#pnCentral").html("").append(content);
 	
