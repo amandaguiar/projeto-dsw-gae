@@ -20,7 +20,7 @@
 		<label for="newpassword2">Repita a nova senha:</label>
 		<input id="newpassword2" type="password" name="newpassword2" size="32"/>
 		
-		<input type="submit" name="btSubmit" value="Mude a Senha" />
+		<input type="submit" name="btSubmit" value="Mude a Senha" class="btn btn-primary"/>
 	</form>
 </div>
 

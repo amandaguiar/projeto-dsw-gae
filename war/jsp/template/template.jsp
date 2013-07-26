@@ -54,14 +54,12 @@
 		</div>
 	</div>
 </div>
-	
-
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="span2">
+		<div class="span3 bs-docs-sidebar">
 			<mvc:checkLogged>
-				<div class="well sidebar-nav">
-					<ul class="nav nav-list">
+				<div class="well well-large bs-docs-sidenav">
+					<ul class="nav nav-list bs-docs-sidenav">
 						<li class="active"><a href="/login/homepage.do">Início</a></li>
 						
 						<mvc:checkUserLevel level="ADM">
@@ -81,14 +79,14 @@
 			</mvc:checkLogged>
 
 			<mvc:checkUnlogged>
-				<div class="well">
+				<div class="well well-large bs-docs-sidenav">
 					<h3>Login</h3>
 					<form action="/login/login.do" method="post">
 						<label for="email">E-mail:</label>
-						<input type="text" name="email" id="emailLoginField" />
+						<input type="text" name="email" id="emailLoginField" class="span" />
 						
 						<label for="pwd">Senha:</label>
-						<input type="password" name="pwd" /><br />
+						<input type="password" name="pwd" class="span" /><br />
 						<input type="submit" name="Submit" value="Login" class="btn btn-primary">
 					</form>
 					
@@ -98,8 +96,7 @@
 					</ul>
 				</div>
 			</mvc:checkUnlogged>
-		</div>
-
+		</div>		
 		<div class="span9">
 			<div class="row-fluid error" id="pnErro">
 				<mvc:error/>
