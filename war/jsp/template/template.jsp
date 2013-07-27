@@ -66,7 +66,7 @@
 						<li><a href="#">Meu perfil</a></li>
 						<li><a href="#">Meus tickets</a></li>
 						<li class="nav-header">Tickets</li>
-						<li><a href="/login/novoTicket.do">Novo ticket</a></li>
+						<li><a href="/ticket/novoTicket.do">Novo ticket</a></li>
 						</mvc:checkUserLevel>
 						
 						<mvc:checkUserLevel level="operador">

@@ -7,7 +7,6 @@ import java.util.Random;
 import br.unirio.projetodswgae.services.GerenciadorEmail;
 import br.unirio.projetodswgae.config.Configuracao;
 import br.unirio.projetodswgae.dao.DAOFactory;
-import br.unirio.projetodswgae.model.Ticket;
 import br.unirio.projetodswgae.model.Usuario;
 import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
@@ -276,7 +275,6 @@ public class ActionLogin extends Action {
 		return SUCCESS;
 	}
 
-	
 	/**
 	 * Ação de salvamento dos dados de um usuário
 	 */
@@ -331,56 +329,4 @@ public class ActionLogin extends Action {
 		return addRedirectNotice("Usuario cadastrado com sucesso.");
 	}
 	
-	/**
-	 * Ação para a criação de um novo ticket
-	 */
-	@Any("/jsp/ticket/novoticket.jsp")
-	public String novoTicket()
-	{
-		Ticket ticket = new Ticket();
-		setAttribute("item", ticket);
-		return SUCCESS;
-	}
-	
-	/**
-	 * Ação de salvamento de novos tickets
-	 */
-	@SuccessRedirect("/login/login.do")
-	@Error("/jsp/ticket/novoticket.jsp")
-	public String salvaTicket() throws ActionException
-	{
-		// Pega o identificador do usuário
-		int id = getIntParameter("id", -1);
-
-		// Captura ou cria o usuário
-		Ticket ticket = (id == -1) ? new Ticket() : DAOFactory.getTicketDAO().get(id);
-
-		// Disponibiliza os dados para o caso de erros
-		setAttribute("item", ticket);
-
-		// Captura os dados do formulário
-		ticket.setTitulo(getParameter("titulo", ""));
-		ticket.setDescricao(getParameter("descricao", ""));
-		ticket.setSistema(getParameter("sistema", ""));
-		ticket.setComponente(getParameter("componente", ""));
-		
-		if (ticket.getId() <= 0)
-		{
-			ticket.setIdentificador(Crypto.hash(String.valueOf(id)));
-			
-		}
-		
-		// Verifica as regras de negócio
-		checkNonEmpty(ticket.getTitulo(), "O titulo do ticket não pode ser vazio.");
-		checkLength(ticket.getTitulo(), 80, "O nome do usuário.");
-
-		checkNonEmpty(ticket.getSistema(), "O sistema não pode ser vazio.");
-		
-		checkNonEmpty(ticket.getComponente(), "O componente não pode ser vazio.");
-		// implementear verificacao para quando o componente selecionado não pertençe ao sistema selecionado
-
-		// Salva os dados do usuário
-		DAOFactory.getTicketDAO().put(ticket);
-		return addRedirectNotice("Ticket registrado com sucesso.");
-	}
 }

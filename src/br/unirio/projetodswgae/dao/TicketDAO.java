@@ -1,9 +1,10 @@
 package br.unirio.projetodswgae.dao;
 
-import com.google.appengine.api.datastore.Entity;
-
+import br.unirio.projetodswgae.model.StatusTicket;
 import br.unirio.projetodswgae.model.Ticket;
 import br.unirio.simplemvc.gae.datastore.AbstractDAO;
+
+import com.google.appengine.api.datastore.Entity;
 
 public class TicketDAO extends AbstractDAO<Ticket> {
 	
@@ -22,7 +23,7 @@ public class TicketDAO extends AbstractDAO<Ticket> {
 		ticket.setDescricao(getStringProperty(e, "descricao", ""));
 		ticket.setComponente(getStringProperty(e, "componente", ""));
 		ticket.setSistema(getStringProperty(e, "sistema", ""));
-		ticket.setStatus(getStringProperty(e, "status", ""));
+		ticket.setStatus(StatusTicket.get(getStringProperty(e, "status", StatusTicket.NOVO.getCodigo())));
 		ticket.setOperadorResponsavel(getStringProperty(e, "operador", ""));
 		return ticket;
 	}
@@ -35,7 +36,7 @@ public class TicketDAO extends AbstractDAO<Ticket> {
 		e.setProperty("descricao", ticket.getDescricao());
 		e.setProperty("sistema", ticket.getSistema());
 		e.setProperty("componente", ticket.getComponente());
-		e.setProperty("status", ticket.getStatus());
+		e.setProperty("status", ticket.getStatus().getCodigo());
 		e.setProperty("operador", ticket.getOperadorResponsavel());
 	}
 }
