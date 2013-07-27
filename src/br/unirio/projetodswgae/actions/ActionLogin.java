@@ -17,7 +17,6 @@ import br.unirio.simplemvc.actions.results.Error;
 import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
 import br.unirio.simplemvc.utils.Crypto;
-import br.unirio.simplemvc.utils.Validators;
 
 /**
  * Classe com ações de login e tratamento de usuários
@@ -57,7 +56,7 @@ public class ActionLogin extends Action {
 		if (usuario.getForcaResetSenha())
 			return addError("O sistema indica que você precisa fazer um reset de senha. Isto pode ter ocorrido porque você pediu o reset e ainda não recebemos a confirmação ou porque houve três tentativas mal-sucedidas de acesso à sua conta. Se necessário, clique na opção \"Esqueceu sua senha?\" para enviarmos novamente o e-mail de reset de senha.");
 
-		String hashSenha = Configuracao.getAmbienteHomologacao() ? password : Crypto.hash(password);
+		String hashSenha = Crypto.hash(password);
 
 		if (usuario.getSenha().compareTo(hashSenha) != 0)
 		{
@@ -125,12 +124,12 @@ public class ActionLogin extends Action {
 		String senhaAtual = getParameter("oldpassword");
 		check(senhaAtual != null, "Entre com sua senha antiga.");
 
-		String hashSenha = Configuracao.getAmbienteHomologacao() ? senhaAtual : Crypto.hash(senhaAtual);
+		String hashSenha = Crypto.hash(senhaAtual);
 		check(usuario.getSenha().compareTo(hashSenha) == 0, "A senha antiga está incorreta.");
 
 		String novaSenha = getParameter("newpassword");
 		check(novaSenha != null, "Entre com sua nova senha.");
-		check(senhaAceitavel(novaSenha), "A nova senha deve conter pelo menos 8 caracteres, uma letra e um número.");
+		check(senhaAceitavel(novaSenha), "A nova senha deve conter pelo menos 8 caracteres. Entre eles, uma letra e um número.");
 
 		String novaSenha2 = getParameter("newpassword2");
 		check(novaSenha2 != null, "Repita sua nova senha.");
@@ -138,18 +137,18 @@ public class ActionLogin extends Action {
 		check(novaSenha.length() != 0, "A nova senha não pode ser em branco.");
 		check(novaSenha.compareTo(novaSenha2) == 0, "Sua senha nova e a repetição estão diferentes.");
 
-		String hashNovaSenha = Configuracao.getAmbienteHomologacao() ? novaSenha : Crypto.hash(novaSenha);
+		String hashNovaSenha = Crypto.hash(novaSenha);
 		usuario.setSenha(hashNovaSenha);
 		usuario.setDeveTrocarSenha(false);
 		usuario.setForcaResetSenha(false);
 		
 		DAOFactory.getUsuarioDAO().put(usuario);
-		return addRedirectNotice("senha.trocada");
+		return addRedirectNotice("Senha alterada com sucesso.");
 	}
 
 	/**
 	 * Verifica se uma senha é aceitável, checando se ela tem pelo menos 8
-	 * caracteres, uma letra e um número
+	 * caracteres. Entre eles uma letra e um número.
 	 */
 	private boolean senhaAceitavel(String senha)
 	{
@@ -159,7 +158,7 @@ public class ActionLogin extends Action {
 	/**
 	 * Ação de envio de email para reset de senha
 	 */
-	/*@DisableUserVerification
+	@DisableUserVerification
 	@SuccessRedirect("/login/homepage.do")
 	@Error("/jsp/login/esqueceuSenha.jsp")
 	public String enviaSenha() throws ActionException
@@ -176,12 +175,12 @@ public class ActionLogin extends Action {
 
 		String url = Configuracao.getHostname() + "/login/preparaResetSenha.do?token=" + token + "&email=" + usuario.getEmail();
 		String corpo = "<p>Você está recebendo este e-mail porque pediu a reinicializa\u00E7\u00E3o da senha de acesso ao ";
-		corpo += "sistema do PPGI. Clique <a href='" + url + "'>aqui</a> para acessar a página de troca de senha.</p>";
-		boolean envioOK = GerenciadorEmail.getInstance().envia(usuario.getNome(), usuario.getEmail(), "Reinicializacao de senha de acesso ao sistema do PPGI", corpo);
-		check(envioOK, "Ocorreu um erro ao enviar um e-mail com sua senha");
+		corpo += "Projeto DSW. Clique <a href='" + url + "'>aqui</a> para acessar a página de troca de senha.</p>";
+		boolean envioOK = GerenciadorEmail.getInstance().envia(usuario.getNome(), usuario.getEmail(), "Reinicializacao de senha de acesso ao Projeto DSW", corpo);
+		check(envioOK, "Ocorreu um erro ao enviar um e-mail com sua senha.");
 
-		return addRedirectNotice("pedido.reinicializacao.email");
-	}*/
+		return addRedirectNotice("Senha enviada com sucesso.");
+	}
 
 	/**
 	 * Gera um token para troca de senha
@@ -205,7 +204,7 @@ public class ActionLogin extends Action {
 	 */
 	@DisableUserVerification
 	@Success("/jsp/login/resetSenha.jsp")
-	@Error("/jsp/login/esqueceuSenhaForm.jsp")
+	@Error("/jsp/login/esqueceuSenha.jsp")
 	public String preparaResetSenha() throws ActionException
 	{
 		String token = getParameter("token", "");
@@ -218,7 +217,7 @@ public class ActionLogin extends Action {
 		check(usuario != null, "O usuário que requisitou o reset de senha não está registrado no sistema.");
 
 		boolean valido = DAOFactory.getUsuarioTokenSenhaDAO().verificaTokenTrocaSenha(usuario.getId(), token, VALIDATE_TOKEN_SENHA);
-		check(valido, "O token de troca de senha não é válido");
+		check(valido, "O token de troca de senha não é válido.");
 
 		setAttribute("token", token);
 		setAttribute("email", email);
@@ -250,7 +249,7 @@ public class ActionLogin extends Action {
 
 		String novaSenha = getParameter("newpassword");
 		check(novaSenha != null, "Entre com sua nova senha.");
-		check(senhaAceitavel(novaSenha), "A nova senha deve conter pelo menos 8 caracteres, uma letra e um número.");
+		check(senhaAceitavel(novaSenha), "A nova senha deve conter pelo menos 8 caracteres. Entre eles, uma letra e um número.");
 
 		String novaSenha2 = getParameter("newpassword2");
 		check(novaSenha2 != null, "Repita sua nova senha.");
@@ -261,21 +260,9 @@ public class ActionLogin extends Action {
 		usuario.setForcaResetSenha(false);
 		
 		DAOFactory.getUsuarioDAO().put(usuario);
-		return addRedirectNotice("senha.trocada");
+		return addRedirectNotice("Senha alterada com sucesso.");
 	}
-
-	/**
-	 * Envia um e-mail informando a senha do usuário
-	 *//*
-	private boolean enviaSenhaUsuario(Usuario usuario, String senha)
-	{
-		String corpo = "<p>Para acessar o sistema de inscrições do PPGI use seu e-mail como login e a senha <b>" + senha + "</b>. ";
-		corpo += "O sistema lhe pedirá uma nova senha no primeiro login. Esta senha também poderá ser trocada posteriormente no ";
-		corpo += "sistema.</p>";
-
-		return GerenciadorEmail.getInstance().envia(usuario.getNome(), usuario.getEmail(), "Sua senha de acesso ao sistema do PPGI", corpo);
-	}*/
-
+	
 	/**
 	 * Ação para a criação de um novo usuário
 	 */
@@ -288,22 +275,6 @@ public class ActionLogin extends Action {
 		return SUCCESS;
 	}
 
-	/**
-	 * Gera aleatoriamente a senha de um novo usuário
-	 */
-	private String criaSenhaAleatoria()
-	{
-		Random r = Crypto.createSecureRandom();
-		String senha = "";
-
-		for (int i = 0; i < 3; i++)
-			senha = senha + (char) ('A' + r.nextInt(26));
-
-		for (int i = 0; i < 6; i++)
-			senha = senha + (char) ('0' + r.nextInt(10));
-
-		return senha;
-	}
 
 	/**
 	 * Ação de salvamento dos dados de um usuário
@@ -332,32 +303,30 @@ public class ActionLogin extends Action {
 		if (usuario.getId() <= 0 && !senha.isEmpty())
 		{
 			senha = getParameter("senha", "");
-			usuario.setSenha(Configuracao.getAmbienteHomologacao() ? senha : Crypto.hash(senha));
+			usuario.setSenha(Crypto.hash(senha));
 			
-			/*if (!Configuracao.getAmbienteHomologacao())
-				check(enviaSenhaUsuario(usuario, senha), "Ocorreram problemas no envio dos dados para o seu e-mail");*/
 		}
 		
 		// Verifica as regras de negócio
-		checkNonEmpty(usuario.getNome(), "O nome do usuário não pode ser vazio");
-		checkLength(usuario.getNome(), 80, "O nome do usuário");
+		checkNonEmpty(usuario.getNome(), "O nome do usuário não pode ser vazio.");
+		checkLength(usuario.getNome(), 80, "O nome do usuário.");
 
-		checkNonEmpty(usuario.getSobrenome(), "O Sobrenome do usuário não pode ser vazio");
-		checkLength(usuario.getSobrenome(), 80, "O Sobrenome do usuário");
+		checkNonEmpty(usuario.getSobrenome(), "O Sobrenome do usuário não pode ser vazio.");
+		checkLength(usuario.getSobrenome(), 80, "O Sobrenome do usuário.");
 		
-		checkNonEmpty(usuario.getEmail(), "O e-mail do usuário não pode ser vazio");
-		checkLength(usuario.getEmail(), 80, "O e-mail do usuário");
-		checkEmail(usuario.getEmail(), "O e-mail do usuário não está seguindo um formato válido");
+		checkNonEmpty(usuario.getEmail(), "O e-mail do usuário não pode ser vazio.");
+		checkLength(usuario.getEmail(), 80, "O e-mail do usuário.");
+		checkEmail(usuario.getEmail(), "O e-mail do usuário não está seguindo um formato válido.");
 
 		Usuario usuario2 = DAOFactory.getUsuarioDAO().getUsuarioEmail(usuario.getEmail());
-		check(usuario2 == null || usuario2.getId() == usuario.getId(), "Já existe um usuário com esse e-mail");
+		check(usuario2 == null || usuario2.getId() == usuario.getId(), "Já existe um usuário com esse e-mail.");
 
-		checkNonEmpty(usuario.getSenha(), "A senha do usuário não pode ser vazia");
+		checkNonEmpty(usuario.getSenha(), "A senha do usuário não pode ser vazia.");
 		String confirmacao_senha = getParameter("confirmacao_senha", "");
-		check(senha.equals(confirmacao_senha), "As senhas digitadas não são iguais");
+		check(senha.equals(confirmacao_senha), "As senhas digitadas não são iguais.");
 
 		// Salva os dados do usuário
 		DAOFactory.getUsuarioDAO().put(usuario);
-		return addRedirectNotice("Usuario cadastrado com sucesso");
+		return addRedirectNotice("Usuario cadastrado com sucesso.");
 	}
 }

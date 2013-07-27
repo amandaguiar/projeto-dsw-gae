@@ -34,12 +34,12 @@ td { width: 350px; }
 		
 		<tr><td colspan="2">
 			<label for="senha">Senha:</label>
-			<input type="text" name="senha" id="senha" value="${usuario.senha}" class="long" /><br>
+			<input type="password" name="senha" id="senha" value="${usuario.senha}" class="long" /><br>
 		</td></tr>
 		
 		<tr><td colspan="2">
 			<label for="confirmacao_senha">Confirmação da Senha:</label>
-			<input type="text" name="confirmacao_senha" id="confirmacao_senha" class="long" /><br>
+			<input type="password" name="confirmacao_senha" id="confirmacao_senha" class="long" /><br>
 		</td></tr>
 		</table>		
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
-<%@taglib uri="/WEB-INF/ppgi.tld" prefix="ppgi"%>
 <%@taglib uri="/WEB-INF/simplemvc.tld" prefix="mvc"%>
 
 <%@ page import="br.unirio.simplemvc.servlets.AuthenticationService" %>
@@ -89,7 +88,6 @@
 						<input type="password" name="pwd" class="span" /><br />
 						<input type="submit" name="Submit" value="Login" class="btn btn-primary">
 					</form>
-					
 					<ul>
 						<li><a href="/jsp/login/esqueceuSenha.jsp">Esqueci minha senha</a></li>
 						<li><a href="/login/novo.do">Criar conta no sistema</a></li>
