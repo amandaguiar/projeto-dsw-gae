@@ -19,6 +19,12 @@
 
 <mvc:checkLogged>
 	<div id="content">
+	
+<!-- 		<ul class="breadcrumb"> -->
+<!-- 		  <li><a href="#">Início</a></li> -->
+<!-- 		  <li><a href="#">Meu Perfil</a></li>	  	   -->
+<!-- 		</ul> -->
+		
 		<h3>Sistema de controle de bugs</h3>
 		
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque id pharetra mi. Proin nec aliquet leo. 
