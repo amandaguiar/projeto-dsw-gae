@@ -41,7 +41,7 @@ public class ActionSistema extends Action{
 		
 		// Captura os dados do formulário
 		sistema.setNome(getParameter("nome", ""));
-		
+				
 		// Verifica as regras de negócio
 		checkNonEmpty(sistema.getNome(), "O nome do sistema não pode ser vazio.");
 
