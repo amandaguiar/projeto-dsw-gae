@@ -43,8 +43,8 @@
 					
 			<mvc:checkLogged>
 			<div class="nav-collapse collapse">
-				<p class="navbar-text pull-right">
-					Olá, <c:out value="${usuarioLogado.nome}"/>! | <a href="/login/preparaTrocaSenha.do">Troca Senha</a> | <a href="/login/logout.do">Logout</a>
+				<p class="navbar-text pull-right"> 
+					Olá, <c:out value="${usuarioLogado.nome}"/>! Último login em: &nbsp;&nbsp; | <a href="/login/preparaTrocaSenha.do">Troca Senha</a> | <a href="/login/logout.do">Logout</a>
 				</p>
 				<ul class="nav">
 				</ul>
