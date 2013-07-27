@@ -44,7 +44,7 @@
 			<mvc:checkLogged>
 			<div class="nav-collapse collapse">
 				<p class="navbar-text pull-right"> 
-					Olá, <c:out value="${usuarioLogado.nome}"/>! Último login em: &nbsp;&nbsp; | <a href="/login/preparaTrocaSenha.do">Troca Senha</a> | <a href="/login/logout.do">Logout</a>
+					Olá, <c:out value="${usuarioLogado.nome}"/>! Último login em: &nbsp;&nbsp; | <a href="/login/preparaTrocaSenha.do">Trocar Senha</a> | <a href="/login/logout.do">Logout</a>
 				</p>
 				<ul class="nav">
 				</ul>
@@ -61,18 +61,26 @@
 					<ul class="nav nav-list bs-docs-sidenav">
 						<li class="active"><a href="/login/homepage.do">Início</a></li>
 						
-						<mvc:checkUserLevel level="ADM">
-						<li class="nav-header">Administração</li>
-						<li><a href="#">Sistemas</a></li>
-						<li><a href="#">Componentes</a></li>
-						<li><a href="#">Tickets</a></li>
-						</mvc:checkUserLevel>
-
-						<mvc:checkUserLevel level="ADM" type="none">
+						<mvc:checkUserLevel level="final">
 						<li class="nav-header">Meus dados</li>
 						<li><a href="#">Meu Perfil</a></li>
 						<li><a href="#">Meus tickets</a></li>
 						</mvc:checkUserLevel>
+						
+						<mvc:checkUserLevel level="operador">
+						<li class="nav-header">Meus dados</li>
+						<li><a href="#">Meu Perfil</a></li>
+						<li><a href="#">Meus tickets</a></li>
+						</mvc:checkUserLevel>
+						
+						<mvc:checkUserLevel level="adm">
+						<li class="nav-header">Administração</li>
+						<li><a href="#">Sistemas</a></li>
+						<li><a href="#">Componentes</a></li>
+						<li><a href="#">Tickets</a></li>
+						<li><a href="#">Usuários</a></li>
+						</mvc:checkUserLevel>
+						
 					</ul>
 				</div>
 			</mvc:checkLogged>
@@ -105,6 +113,7 @@
 			</div>
 			
 			<div class="row-fluid" id="pnCentral">
+							
 			</div>
 		</div>
 	</div>
