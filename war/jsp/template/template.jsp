@@ -57,29 +57,32 @@
 	<div class="row-fluid">
 		<div class="span3 bs-docs-sidebar">
 			<mvc:checkLogged>
-				<div class="well well-large bs-docs-sidenav">
-					<ul class="nav nav-list bs-docs-sidenav">
+				<div class="well">
+					<ul class="nav nav-pills nav-stacked">
 						<li class="active"><a href="/login/homepage.do">Início</a></li>
 						
 						<mvc:checkUserLevel level="final">
 						<li class="nav-header">Meus dados</li>
-						<li><a href="#">Meu Perfil</a></li>
+						<li><a href="#">Meu perfil</a></li>
 						<li><a href="#">Meus tickets</a></li>
+						<li class="nav-header">Tickets</li>
 						<li><a href="/login/novoTicket.do">Novo ticket</a></li>
 						</mvc:checkUserLevel>
 						
 						<mvc:checkUserLevel level="operador">
 						<li class="nav-header">Meus dados</li>
-						<li><a href="#">Meu Perfil</a></li>
-						<li><a href="#">Meus tickets</a></li>
-						<li><a href="/login/novoTicket.do">Registrar ticket</a></li>
+						<li><a href="#">Meu perfil</a></li>
+						<li class="nav-header">Tickets</li>
+						<li><a href="#">Meus tickets</a></li>						
 						</mvc:checkUserLevel>
 						
 						<mvc:checkUserLevel level="adm">
+						<li class="nav-header">Meus dados</li>
+						<li><a href="#">Meu perfil</a></li>						
 						<li class="nav-header">Administração</li>
 						<li><a href="#">Sistemas</a></li>
 						<li><a href="#">Componentes</a></li>
-						<li><a href="#">Tickets</a></li>
+						<li><a href="#">Tickets</a></li>						
 						<li><a href="#">Usuários</a></li>
 						</mvc:checkUserLevel>
 						
