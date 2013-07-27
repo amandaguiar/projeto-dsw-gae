@@ -80,8 +80,8 @@
 						<li class="nav-header">Meus dados</li>
 						<li><a href="#">Meu perfil</a></li>						
 						<li class="nav-header">Administração</li>
-						<li><a href="#">Sistemas</a></li>
-						<li><a href="#">Componentes</a></li>
+						<li><a href="/sistema/novoSistema.do">Sistemas</a></li>
+						<li><a href="/componente/novoComponente.do">Componentes</a></li>
 						<li><a href="#">Tickets</a></li>						
 						<li><a href="#">Usuários</a></li>
 						</mvc:checkUserLevel>
