@@ -4,7 +4,7 @@ import br.unirio.simplemvc.gae.datastore.DataObject;
 import br.unirio.simplemvc.servlets.IUser;
 
 public class Usuario implements IUser, DataObject {
-	private int idUsuario;
+	private int id;
 	private String nome;
 	private String sobrenome;
 	private String email;
@@ -17,7 +17,7 @@ public class Usuario implements IUser, DataObject {
 	
 	
 	public Usuario() {
-		this.idUsuario = -1;
+		this.id = -1;
 		this.nome = "";
 		this.sobrenome = "";
 		this.email = "";
@@ -31,24 +31,14 @@ public class Usuario implements IUser, DataObject {
 	@Override
 	public int getId()
 	{
-		return idUsuario;
+		return id;
 	}
 	
-	public void setId(int id_usuario)
+	public void setId(int id)
 	{
-		this.idUsuario = id_usuario;
+		this.id = id;
 	}
 	
-	public int getIdUsuario() {
-		return idUsuario;
-	}
-
-
-	public void setIdUsuario(int id_usuario) {
-		this.idUsuario = id_usuario;
-	}
-
-
 	@Override
 	public String getName()
 	{
