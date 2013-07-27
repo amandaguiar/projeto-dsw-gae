@@ -9,7 +9,6 @@ import br.unirio.simplemvc.actions.results.SuccessRedirect;
 import br.unirio.projetodswgae.dao.DAOFactory;
 
 public class ActionComponente extends Action{
-
 	
 	/**
 	 * Ação para a criação de um novo componente
@@ -30,6 +29,19 @@ public class ActionComponente extends Action{
 	@Error("/jsp/componente/componenteform.jsp")
 	public String salvaComponente() throws ActionException
 	{
+		
+		// Pega o identificador do componente
+		int id = getIntParameter("id", -1);
+
+		// Captura ou cria o componente
+		Componente componente = (id == -1) ? new Componente() : DAOFactory.getComponenteDAO().get(id);
+
+		// Disponibiliza os dados para o caso de erros
+		setAttribute("item", componente);
+		
+		//TODO 
+		
+		DAOFactory.getComponenteDAO().put(componente);
 		return addRedirectNotice("Componente registrado com sucesso.");		
 	}
 }

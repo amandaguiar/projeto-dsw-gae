@@ -9,7 +9,9 @@ public class DAOFactory {
 	private static UsuarioLoginDAO loginUsuarioDAO;
 	private static UsuarioTokenSenhaDAO tokenSenhaUsuarioDAO;
 	private static TicketDAO ticketDAO;
-
+	private static SistemaDAO sistemaDAO;
+	private static ComponenteDAO componenteDAO;
+	
 	public static UsuarioDAO getUsuarioDAO()
 	{
 		if (usuarioDAO == null)
@@ -40,5 +42,20 @@ public class DAOFactory {
 			ticketDAO = new TicketDAO();
 		
 		return ticketDAO;
+	}
+	
+	public static SistemaDAO getSistemaDAO()
+	{
+		if (sistemaDAO == null)
+			sistemaDAO = new SistemaDAO();
+		
+		return sistemaDAO;
+	}
+
+	public static ComponenteDAO getComponenteDAO() {
+		if (componenteDAO == null)
+			componenteDAO = new ComponenteDAO();
+		
+		return componenteDAO;
 	}
 }
