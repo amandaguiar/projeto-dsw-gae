@@ -6,6 +6,6 @@
 	<classpathentry kind="lib" path="war/WEB-INF/lib/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar"/>
-	<classpathentry kind="lib" path="C:/WorkspaceDSW/projeto-dsw-gae/war/WEB-INF/lib/simplemvc.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/simplemvc.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

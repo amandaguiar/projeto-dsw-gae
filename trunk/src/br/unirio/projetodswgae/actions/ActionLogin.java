@@ -164,7 +164,7 @@ public class ActionLogin extends Action {
 	public String enviaSenha() throws ActionException
 	{
 		String email = getParameter("email");
-		check(email != null, "Entre com seu e-mail.");
+		checkNonEmpty(email, "Entre com seu e-mail.");
 		setAttribute("email", email);
 
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioEmail(email);
