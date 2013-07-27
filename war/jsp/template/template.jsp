@@ -71,6 +71,7 @@
 						<li class="nav-header">Meus dados</li>
 						<li><a href="#">Meu Perfil</a></li>
 						<li><a href="#">Meus tickets</a></li>
+						<li><a href="/login/novoTicket.do">Registrar ticket</a></li>
 						</mvc:checkUserLevel>
 						
 						<mvc:checkUserLevel level="adm">
