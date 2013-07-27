@@ -2,9 +2,9 @@ package br.unirio.projetodswgae.model;
 
 public enum TipoUsuario {
 
-	USUARIO_FINAL("usuario_final"),
+	USUARIO_FINAL("final"),
 	OPERADOR("operador"),
-	ADMINISTRADOR("administrador");
+	ADMINISTRADOR("adm");
 	
 private String codigo;
 	
