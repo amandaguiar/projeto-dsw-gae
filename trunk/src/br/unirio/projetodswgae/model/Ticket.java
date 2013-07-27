@@ -7,11 +7,11 @@ public class Ticket implements DataObject{
 	private int id;
 	private String identificador;
 	private String titulo;
-	private Sistema sistema;
-	private Componente componente;
+	private String sistema;
+	private String componente;
 	private String descricao;
-	private StatusTicket status;
-	private Usuario operadorResponsavel;
+	private String status;
+	private String operadorResponsavel;
 	
 	
 	@Override
@@ -34,16 +34,16 @@ public class Ticket implements DataObject{
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	public Sistema getSistema() {
+	public String getSistema() {
 		return sistema;
 	}
-	public void setSistema(Sistema sistema) {
+	public void setSistema(String sistema) {
 		this.sistema = sistema;
 	}
-	public Componente getComponente() {
+	public String getComponente() {
 		return componente;
 	}
-	public void setComponente(Componente componente) {
+	public void setComponente(String componente) {
 		this.componente = componente;
 	}
 	public String getDescricao() {
@@ -52,16 +52,16 @@ public class Ticket implements DataObject{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public StatusTicket getStatus() {
+	public String getStatus() {
 		return status;
 	}
-	public void setStatus(StatusTicket status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Usuario getOperadorResponsavel() {
+	public String getOperadorResponsavel() {
 		return operadorResponsavel;
 	}
-	public void setOperadorResponsavel(Usuario operadorResponsavel) {
+	public void setOperadorResponsavel(String operadorResponsavel) {
 		this.operadorResponsavel = operadorResponsavel;
 	}
 	
