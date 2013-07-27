@@ -13,7 +13,7 @@ td { width: 350px; }
 	
 	<p>Entre com os dados do novo ticket no formulário abaixo:</p>
 	
-	<form action="/login/salvaTicket.do" method="post">
+	<form action="/ticket/salvaTicket.do" method="post">
 		<input type="hidden" name="id" value="${ticket.id}"/>
 
 		<table>

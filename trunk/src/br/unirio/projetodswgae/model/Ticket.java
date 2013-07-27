@@ -10,9 +10,18 @@ public class Ticket implements DataObject{
 	private String sistema;
 	private String componente;
 	private String descricao;
-	private String status;
+	private StatusTicket status;
 	private String operadorResponsavel;
 	
+	public Ticket() {
+		this.id = -1;
+		this.titulo = "";
+		this.sistema = "";
+		this.componente = "";
+		this.descricao = "";
+		this.status = StatusTicket.NOVO;
+		this.operadorResponsavel = "";
+	}
 	
 	@Override
 	public int getId() {
@@ -52,10 +61,10 @@ public class Ticket implements DataObject{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public String getStatus() {
+	public StatusTicket getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(StatusTicket status) {
 		this.status = status;
 	}
 	public String getOperadorResponsavel() {
