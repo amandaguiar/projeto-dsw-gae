@@ -39,7 +39,14 @@ public class ActionComponente extends Action{
 		// Disponibiliza os dados para o caso de erros
 		setAttribute("item", componente);
 		
-		//TODO 
+		// Captura os dados do formulário
+		componente.setNome(getParameter("nome", ""));
+			
+		//TODO pegar o usuario operador atraves do email
+		//TODO pegar o sistema atraves do nome do sistema
+		
+		// Verifica as regras de negócio
+		checkNonEmpty(componente.getNome(), "O nome do componente não pode ser vazio.");
 		
 		DAOFactory.getComponenteDAO().put(componente);
 		return addRedirectNotice("Componente registrado com sucesso.");		
