@@ -65,7 +65,7 @@
 						<mvc:checkUserLevel level="final">
 						<li class="nav-header">Meus dados</li>
 						<li><a href="/usuario/preparaEdicaoDadosUsuario.do">Meu perfil</a></li>
-						<li><a href="#">Meus tickets</a></li>
+						<li><a href="/ticket/listaTickets.do">Meus tickets</a></li>
 						<li class="nav-header">Tickets</li>
 						<li><a href="/ticket/novoTicket.do">Novo ticket</a></li>
 						</mvc:checkUserLevel>
