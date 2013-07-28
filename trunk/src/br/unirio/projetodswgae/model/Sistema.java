@@ -7,6 +7,12 @@ public class Sistema implements DataObject{
 	private int id;
 	private String nome;
 	
+	public Sistema()
+	{
+		this.id = -1;
+		this.nome = "";
+	}
+	
 	@Override
 	public int getId() {
 		return id;

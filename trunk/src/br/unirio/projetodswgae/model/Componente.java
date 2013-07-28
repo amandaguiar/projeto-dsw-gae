@@ -9,6 +9,14 @@ public class Componente implements DataObject{
 	private String sistema;
 	private String emailOperadorResponsavel;
 	
+	public Componente()
+	{
+		this.id = -1;
+		this.nome = "";
+		this.sistema = "";
+		this.emailOperadorResponsavel = "";
+	}
+	
 	@Override
 	public int getId() {
 		return id;

@@ -1,6 +1,7 @@
 package br.unirio.projetodswgae.actions;
 
 import br.unirio.projetodswgae.model.Componente;
+import br.unirio.projetodswgae.model.Sistema;
 import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.results.Any;
@@ -41,10 +42,9 @@ public class ActionComponente extends Action{
 		
 		// Captura os dados do formulário
 		componente.setNome(getParameter("nome", ""));
-			
-		//TODO pegar o usuario operador atraves do email
-		//TODO pegar o sistema atraves do nome do sistema
-		
+		componente.setSistema(getParameter("sistema", ""));
+		componente.setEmailOperadorResponsavel(getParameter("email", ""));
+				
 		// Verifica as regras de negócio
 		checkNonEmpty(componente.getNome(), "O nome do componente não pode ser vazio.");
 		

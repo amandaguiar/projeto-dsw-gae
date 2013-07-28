@@ -17,19 +17,19 @@ td { width: 350px; }
 		<tr>
 			<td colspan="2">
 				<label for="nome">Nome:</label>
-				<input type="text" name="nome" id="nome" value="${componente.titulo}" class="long" /><br>
+				<input type="text" name="nome" id="nome" value="${componente.nome}" class="long" /><br>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<label for="sistema">Sistema:</label>
-				
+				<pdsw:seletorSistema name="sistema" value="${componente.sistema}" id="sistema" blankOption="Selecione o sistema ..."/><br>
 			</td>
 		</tr>
 		<tr>
 			<td colspan="2">
 				<label for="email">E-mail operador responsável:</label>
-				<input type="text" name="email" id="email" value="${componente.email}" class="long" /><br>
+				<input type="text" name="email" id="email" value="${componente.emailOperadorResponsavel}" class="long" /><br>
 			</td>			
 		</tr>
 		</table>

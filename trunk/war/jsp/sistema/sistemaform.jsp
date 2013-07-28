@@ -14,10 +14,12 @@ td { width: 350px; }
 		<input type="hidden" name="id" value="${sistema.id}"/>
 
 		<table>
-		<tr><td colspan="2">
-			<label for="nome">Nome:</label>
-			<input type="text" name="nome" id="nome" value="${sistema.nome}" class="long" /><br>
-		</td></tr>
+		<tr>
+			<td colspan="2">
+				<label for="nome">Nome:</label>
+				<input type="text" name="nome" id="nome" value="${sistema.nome}" class="long" /><br>
+			</td>
+		</tr>
 		</table>
 
 		<input type="submit" name="btSubmit" value="Enviar Dados" class="btn btn-primary"/><br>
