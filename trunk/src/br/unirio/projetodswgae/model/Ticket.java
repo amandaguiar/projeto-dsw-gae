@@ -5,6 +5,7 @@ import br.unirio.simplemvc.gae.datastore.DataObject;
 public class Ticket implements DataObject{
 
 	private int id;
+	private int id_usuario;
 	private String identificador;
 	private String titulo;
 	private String sistema;
@@ -15,6 +16,7 @@ public class Ticket implements DataObject{
 	
 	public Ticket() {
 		this.id = -1;
+		this.id_usuario = -1;
 		this.titulo = "";
 		this.sistema = "";
 		this.componente = "";
@@ -73,7 +75,13 @@ public class Ticket implements DataObject{
 	public void setOperadorResponsavel(String operadorResponsavel) {
 		this.operadorResponsavel = operadorResponsavel;
 	}
-	
-	
+
+	public int getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(int id_usuario) {
+		this.id_usuario = id_usuario;
+	}
 	
 }

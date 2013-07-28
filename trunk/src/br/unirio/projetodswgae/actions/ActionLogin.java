@@ -329,4 +329,5 @@ public class ActionLogin extends Action {
 		return addRedirectNotice("Usuario cadastrado com sucesso.");
 	}
 	
+	
 }

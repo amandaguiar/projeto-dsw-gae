@@ -57,10 +57,19 @@ public class ActionTicket extends Action{
 		checkNonEmpty(ticket.getSistema(), "O sistema não pode ser vazio.");
 		
 		checkNonEmpty(ticket.getComponente(), "O componente não pode ser vazio.");
-		// implementear verificacao para quando o componente selecionado não pertençe ao sistema selecionado
 
 		// Salva os dados do usuário
 		DAOFactory.getTicketDAO().put(ticket);
 		return addRedirectNotice("Ticket registrado com sucesso.");
+	}
+	
+	/**
+	 * Ação para listar tickets de um usuário
+	 */
+	@SuccessRedirect("/jsp/ticket/listatickets.jsp")
+	@Error("/login/login.do")
+	public String listaTickets() throws ActionException{
+		
+		return SUCCESS;
 	}
 }
