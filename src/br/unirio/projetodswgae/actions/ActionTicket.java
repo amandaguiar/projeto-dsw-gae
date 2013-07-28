@@ -63,5 +63,4 @@ public class ActionTicket extends Action{
 		DAOFactory.getTicketDAO().put(ticket);
 		return addRedirectNotice("Ticket registrado com sucesso.");
 	}
-	
 }

@@ -6,8 +6,8 @@ public class Componente implements DataObject{
 
 	private int id;
 	private String nome;
-	private Sistema sistema;
-	private Usuario operadorResponsavel;
+	private String sistema;
+	private String emailOperadorResponsavel;
 	
 	@Override
 	public int getId() {
@@ -23,17 +23,17 @@ public class Componente implements DataObject{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Sistema getSistema() {
+	public String getSistema() {
 		return sistema;
 	}
-	public void setSistema(Sistema sistema) {
+	public void setSistema(String sistema) {
 		this.sistema = sistema;
 	}
-	public Usuario getOperadorResponsavel() {
-		return operadorResponsavel;
+	public String getEmailOperadorResponsavel() {
+		return emailOperadorResponsavel;
 	}
-	public void setOperadorResponsavel(Usuario operadorResponsavel) {
-		this.operadorResponsavel = operadorResponsavel;
+	public void setEmailOperadorResponsavel(String emailOperadorResponsavel) {
+		this.emailOperadorResponsavel = emailOperadorResponsavel;
 	}
 	
 }

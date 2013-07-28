@@ -33,13 +33,13 @@ function ajaxCallNoError (url, postData, async, success) {
 	});
 }
 
-function capturaMunicipios(controleEstado, controleMunicipio, selecionado) 
+function capturaComponentes(controleSistema, controleComponente, selecionado) 
 {
-	ajaxCall("/common/listaMunicipios.do", "estado=" + $("#" + controleEstado).val(), true, function(data) {
+	ajaxCall("/common/listaComponentes.do", "sistema=" + $("#" + controleSistema).val(), true, function(data) {
 		s = "";			
 		$(data).each(function() { s = s + "<option value=\"" + this + "\">" + this + "</option>"; });
-		$('#' + controleMunicipio).html(s);
-		$('#' + controleMunicipio).val(selecionado);
-		$('#' + controleMunicipio).trigger('change');
+		$('#' + controleComponente).html(s);
+		$('#' + controleComponente).val(selecionado);
+		$('#' + controleComponente).trigger('change');
 	});
 }
