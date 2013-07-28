@@ -26,18 +26,34 @@ td { width: 350px; }
 			<label for="descricao">Descricao:</label>
 			<input type="text" name="descricao" id="descricao" value="${ticket.descricao}" class="long" /><br>
 		</td></tr>
-		
-		<tr><td colspan="2">
+				
+		<tr><td>		
 			<label for="sistema">Sistema:</label>
-			<input type="text" name="sistema" id="sistema" value="${ticket.sistema}" class="long" /><br>
-		</td></tr>
-		
-		<tr><td colspan="2">
+			<pdsw:seletorSistema name="sistema" value="${ticket.sistema}" id="sistema" blankOption="Selecione o sistema ..."/><br>
+		</td><td>
 			<label for="componente">Componente:</label>
-			<input type="text" name="componente" id="componente" value="${ticket.componente}" class="long" /><br>
+			<select name="componente" id="componente"><option value="-1">Selecione o componente ...</option></select><br>
 		</td></tr>
 		</table>		
 
 		<input type="submit" name="btSubmit" value="Enviar Dados" class="btn btn-primary"/><br>
-	</form>
+	</form>	
 </div>
+
+<script src="/js/jquery/jquery.ui.min.js"></script>
+<script src="/js/jquery/jquery.maskedinput.js"></script>
+<script src="/js/jquery/jquery.meiomask.js"></script>
+<script src="/js/simplemvc/simplemvc.datefield.js"></script>
+<script src="/js/simplemvc/simplemvc.phonefield.js"></script>
+<script src="/js/simplemvc/simplemvc.intfield.js"></script>
+<script src="/js/forms.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("#sistema").change(function() {
+		capturaComponentes("sistema", "componente", "${item.componente}");
+	});
+	$("#sistema").trigger("change");
+});
+</script>

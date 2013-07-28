@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@taglib uri="/WEB-INF/fmt.tld" prefix="fmt"%>
+<%@taglib uri="/WEB-INF/pdsw.tld" prefix="pdsw"%>
 <%@taglib uri="/WEB-INF/simplemvc.tld" prefix="mvc"%>
 
 <%@ page import="br.unirio.simplemvc.servlets.AuthenticationService" %>

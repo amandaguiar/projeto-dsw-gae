@@ -17,13 +17,15 @@ public class SistemaDAO extends AbstractDAO<Sistema>  {
 	protected Sistema load(Entity e)
 	{
 		Sistema sistema = new Sistema();
+		sistema.setId((int)e.getKey().getId());
+		sistema.setNome(getStringProperty(e, "nome", ""));
 		return sistema;
 	}
 	
 	@Override
 	protected void save(Sistema sistema, Entity e)
 	{
-		
+		e.setProperty("nome", sistema.getNome());
 	}
 	
 }
