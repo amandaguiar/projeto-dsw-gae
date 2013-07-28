@@ -9,8 +9,8 @@ td { width: 350px; }
 	<c:set var="usuario" value="${requestScope.item}" scope="page" />
 	
 	<h3>Usuário</h3>
-	
-	<form action="/usuario/salvaUsuario.do" method="post">
+		
+	<form action="/usuario/editaDadosUsuario.do" method="post">
 		<input type="hidden" name="id" value="${usuario.id}"/>
 
 		<table>
