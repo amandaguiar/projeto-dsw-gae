@@ -73,7 +73,7 @@
 						</mvc:checkUserLevel>
 						
 						<mvc:checkUserLevel level="operador">
-						<li class="nav-header">Meus dados</li>
+						<li class="nav-header">Meus dados</li>s
 						<li><a href="#">Meu perfil</a></li>
 						<li class="nav-header">Tickets</li>
 						<li><a href="#">Meus tickets</a></li>						
@@ -83,8 +83,8 @@
 						<li class="nav-header">Meus dados</li>
 						<li><a href="#">Meu perfil</a></li>						
 						<li class="nav-header">Administração</li>
-						<li><a href="/sistema/novoSistema.do">Sistemas</a></li>
-						<li><a href="/componente/novoComponente.do">Componentes</a></li>
+						<li><a href="/sistema/listaSistemas.do">Sistemas</a></li>
+						<li><a href="/componente/listaComponentes.do">Componentes</a></li>
 						<li><a href="#">Tickets</a></li>						
 						<li><a href="#">Usuários</a></li>
 						</mvc:checkUserLevel>

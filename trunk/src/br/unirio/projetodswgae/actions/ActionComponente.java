@@ -1,16 +1,22 @@
 package br.unirio.projetodswgae.actions;
 
+import java.util.List;
+
 import br.unirio.projetodswgae.model.Componente;
+import br.unirio.projetodswgae.model.Sistema;
 import br.unirio.projetodswgae.model.TipoUsuario;
 import br.unirio.projetodswgae.model.Usuario;
 import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.results.Any;
 import br.unirio.simplemvc.actions.results.Error;
+import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
 import br.unirio.projetodswgae.dao.DAOFactory;
 
 public class ActionComponente extends Action{
+	
+	public static final int PAGE_SIZE = 3;
 	
 	/**
 	 * Ação para a criação de um novo componente
@@ -71,5 +77,27 @@ public class ActionComponente extends Action{
 		
 		DAOFactory.getComponenteDAO().put(componente);
 		return addRedirectNotice("Componente registrado com sucesso.");
+	}
+	
+	/**
+	 * Ação para listar componentes 
+	 */
+	@Success("/jsp/componente/listacomponente.jsp")
+	@Error("/login/login.do")
+	public String listaComponentes() throws ActionException{		
+		
+		int page = getIntParameter("page", 0);
+
+		List<Componente> componente = DAOFactory.getComponenteDAO().getComponentes(page, PAGE_SIZE);
+		int count = DAOFactory.getComponenteDAO().conta();
+		
+		boolean hasNext = (count > (page+1) * PAGE_SIZE);
+		boolean hasPrior = (page > 0);
+		
+		setAttribute("item", componente);
+		setAttribute("page", page);
+		setAttribute("hasNextPage", hasNext);
+		setAttribute("hasPriorPage", hasPrior);
+		return SUCCESS;
 	}
 }

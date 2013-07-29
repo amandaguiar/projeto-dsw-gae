@@ -1,6 +1,9 @@
 package br.unirio.projetodswgae.dao;
 
+import java.util.List;
+
 import br.unirio.projetodswgae.model.Componente;
+import br.unirio.projetodswgae.model.Sistema;
 import br.unirio.projetodswgae.model.Ticket;
 import br.unirio.simplemvc.gae.datastore.AbstractDAO;
 
@@ -66,4 +69,20 @@ public class ComponenteDAO extends AbstractDAO<Componente>{
 		
 		return (String) result.getProperty("emailOperadorResponsavel");
 	}
+	
+	/**
+	 * Retorna os sistemas cadastrados
+	 */
+	
+	public List<Componente> getComponentes(int page, int page_size){
+		return list(page, page_size);
+	}
+
+	/**
+	 * Retorna a quantidade de sistemas cadastrados
+	 */
+	public int conta() {
+		return count();
+	}
+	
 }
