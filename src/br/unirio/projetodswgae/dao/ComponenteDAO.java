@@ -1,10 +1,18 @@
 package br.unirio.projetodswgae.dao;
 
 import br.unirio.projetodswgae.model.Componente;
+import br.unirio.projetodswgae.model.Ticket;
 import br.unirio.simplemvc.gae.datastore.AbstractDAO;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
+import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
 public class ComponenteDAO extends AbstractDAO<Componente>{
@@ -38,5 +46,24 @@ public class ComponenteDAO extends AbstractDAO<Componente>{
 		return list(exactFilter("sistema", FilterOperator.EQUAL, sistema), "nome", SortDirection.ASCENDING);
 	}
 	
-	
+	/**
+	 * 
+	 * Retorna o email do operador de um componente de um sistema
+	 * 
+	 */
+	public String getComponenteEmailOperador(Ticket ticket)
+	{
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		Filter sistema = new FilterPredicate("sistema", FilterOperator.EQUAL, ticket.getSistema());
+		Filter nomeComponente = new FilterPredicate("nome", FilterOperator.EQUAL, ticket.getComponente());
+
+		Filter sistemaEcomponente = CompositeFilterOperator.and(sistema, nomeComponente);
+
+		Query q = new Query("Componente").setFilter(sistemaEcomponente);
+		PreparedQuery pq = datastore.prepare(q);
+		
+		Entity result = pq.asSingleEntity();
+		
+		return (String) result.getProperty("emailOperadorResponsavel");
+	}
 }
