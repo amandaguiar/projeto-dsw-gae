@@ -5,6 +5,8 @@
 <%@taglib uri="/WEB-INF/simplemvc.tld" prefix="mvc"%>
 
 <%@ page import="br.unirio.simplemvc.servlets.AuthenticationService" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
 
 <html>
 <head>

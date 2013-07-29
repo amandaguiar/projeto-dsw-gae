@@ -1,11 +1,15 @@
 package br.unirio.projetodswgae.actions;
 
+import java.util.List;
+
 import br.unirio.projetodswgae.dao.DAOFactory;
 import br.unirio.projetodswgae.model.Ticket;
+import br.unirio.projetodswgae.model.Usuario;
 import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.results.Any;
 import br.unirio.simplemvc.actions.results.Error;
+import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
 import br.unirio.simplemvc.utils.Crypto;
 
@@ -29,6 +33,7 @@ public class ActionTicket extends Action{
 	@Error("/jsp/ticket/novoticket.jsp")
 	public String salvaTicket() throws ActionException
 	{
+		Usuario usuario = (Usuario) checkLogged();
 		// Pega o identificador do usuário
 		int id = getIntParameter("id", -1);
 
@@ -39,15 +44,16 @@ public class ActionTicket extends Action{
 		setAttribute("item", ticket);
 
 		// Captura os dados do formulário
+		ticket.setId_usuario(usuario.getId());
 		ticket.setTitulo(getParameter("titulo", ""));
 		ticket.setDescricao(getParameter("descricao", ""));
 		ticket.setSistema(getParameter("sistema", ""));
 		ticket.setComponente(getParameter("componente", ""));
+		ticket.setOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
 		
 		if (ticket.getId() <= 0)
 		{
 			ticket.setIdentificador(Crypto.hash(String.valueOf(id)));
-			
 		}
 		
 		// Verifica as regras de negócio
@@ -66,10 +72,14 @@ public class ActionTicket extends Action{
 	/**
 	 * Ação para listar tickets de um usuário
 	 */
-	@SuccessRedirect("/jsp/ticket/listatickets.jsp")
+	@Success("/jsp/ticket/listatickets.jsp")
 	@Error("/login/login.do")
 	public String listaTickets() throws ActionException{
+		Usuario usuario = (Usuario) checkLogged();
 		
+		List<Ticket> tickets = DAOFactory.getTicketDAO().getTickets(usuario.getId());
+		
+		setAttribute("item", tickets);
 		return SUCCESS;
 	}
 }
