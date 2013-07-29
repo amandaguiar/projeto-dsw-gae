@@ -1,5 +1,7 @@
 package br.unirio.projetodswgae.actions;
 
+import java.util.List;
+
 import br.unirio.projetodswgae.model.Sistema;
 import br.unirio.projetodswgae.model.Ticket;
 import br.unirio.projetodswgae.model.Usuario;
@@ -7,11 +9,14 @@ import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.results.Any;
 import br.unirio.simplemvc.actions.results.Error;
+import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
 import br.unirio.projetodswgae.dao.DAOFactory;
 
 public class ActionSistema extends Action{
 
+	public static final int PAGE_SIZE = 3;
+	
 	/**
 	 * Ação para a criação de um novo sistema
 	 */
@@ -27,7 +32,7 @@ public class ActionSistema extends Action{
 	/**
 	 * Ação de salvamento de novos componentes
 	 */
-	@SuccessRedirect("/login/login.do")
+	@SuccessRedirect("/jsp/sistema/listasistema.jsp")
 	@Error("/jsp/sistema/sistemaform.jsp")
 	public String salvaSistema() throws ActionException
 	{
@@ -53,5 +58,27 @@ public class ActionSistema extends Action{
 		
 		DAOFactory.getSistemaDAO().put(sistema);
 		return addRedirectNotice("Sistema registrado com sucesso.");		
+	}
+	
+	/**
+	 * Ação para listar sistemas cadastrados
+	 */
+	@Success("/jsp/sistema/listasistema.jsp")
+	@Error("/login/login.do")
+	public String listaSistemas() throws ActionException{		
+		
+		int page = getIntParameter("page", 0);
+
+		List<Sistema> sistema = DAOFactory.getSistemaDAO().getSistemas(page, PAGE_SIZE);
+		int count = DAOFactory.getSistemaDAO().conta();
+		
+		boolean hasNext = (count > (page+1) * PAGE_SIZE);
+		boolean hasPrior = (page > 0);
+		
+		setAttribute("item", sistema);
+		setAttribute("page", page);
+		setAttribute("hasNextPage", hasNext);
+		setAttribute("hasPriorPage", hasPrior);
+		return SUCCESS;
 	}
 }
