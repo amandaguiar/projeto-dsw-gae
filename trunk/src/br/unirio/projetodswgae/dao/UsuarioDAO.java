@@ -1,6 +1,9 @@
 package br.unirio.projetodswgae.dao;
 
+import java.util.List;
+
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 import br.unirio.projetodswgae.model.TipoUsuario;
 import br.unirio.projetodswgae.model.Usuario;
@@ -25,7 +28,7 @@ public class UsuarioDAO extends AbstractDAO<Usuario>{
 		usuario.setSenha(getStringProperty(e, "senha", ""));
 		usuario.setAtivo(getBooleanProperty(e, "ativo", false));
 		usuario.setForcaResetSenha(getBooleanProperty(e, "forcaTrocaSenha", false));
-		usuario.setDeveTrocarSenha(getBooleanProperty(e, "deveTrocarSenha", true));
+		usuario.setDeveTrocarSenha(getBooleanProperty(e, "deveTrocarSenha", true));		
 		return usuario;
 	}
 	
@@ -39,12 +42,31 @@ public class UsuarioDAO extends AbstractDAO<Usuario>{
 		e.setProperty("senha", usuario.getSenha());
 		e.setProperty("ativo", usuario.getAtivo());
 		e.setProperty("forcaTrocaSenha", usuario.getForcaResetSenha());
-		e.setProperty("deveTrocarSenha", usuario.getDeveTrocarSenha());
-	}
-	
+		e.setProperty("deveTrocarSenha", usuario.getDeveTrocarSenha());		
+	}	
 	
 	public Usuario getUsuarioEmail(String email)
 	{
 		return get("email", email);
 	}
+	
+	/**
+	 * Retorna os usuarios cadastrados
+	 */
+	
+	public List<Usuario> getUsuarios(int start, int page_size){
+		return list(start, page_size);
+	}
+
+	/**
+	 * Retorna a quantidade de usuarios cadastrados
+	 */
+	public int conta() {
+		return count();
+	}
+	
+	public List<Usuario> getAdministradores() {		
+		return list(exactFilter("tipoUsuario", FilterOperator.EQUAL, TipoUsuario.ADMINISTRADOR.getCodigo().toString()));
+	}
+	
 }

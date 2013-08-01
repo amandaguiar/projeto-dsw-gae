@@ -12,8 +12,7 @@ public class Usuario implements IUser, DataObject {
 	private TipoUsuario tipoUsuario;
 	private boolean ativo;
 	private boolean forcaResetSenha;
-	private boolean deveTrocarSenha;
-	
+	private boolean deveTrocarSenha;	
 	
 	
 	public Usuario() {
@@ -25,7 +24,7 @@ public class Usuario implements IUser, DataObject {
 		this.tipoUsuario = TipoUsuario.USUARIO_FINAL;
 		this.ativo = true;
 		this.setForcaResetSenha(false);
-		this.deveTrocarSenha = false;
+		this.deveTrocarSenha = false;		
 	}
 
 	@Override
@@ -61,31 +60,21 @@ public class Usuario implements IUser, DataObject {
 		return sobrenome;
 	}
 
-
-
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
-
-
 
 	public String getEmail() {
 		return email;
 	}
 
-
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-
-
 	public String getSenha() {
 		return senha;
 	}
-
-
 
 	public void setSenha(String senha) {
 		this.senha = senha;

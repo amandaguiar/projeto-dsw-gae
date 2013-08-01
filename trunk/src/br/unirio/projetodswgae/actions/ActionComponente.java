@@ -16,7 +16,7 @@ import br.unirio.projetodswgae.dao.DAOFactory;
 
 public class ActionComponente extends Action{
 	
-	public static final int PAGE_SIZE = 3;
+	public static final int PAGE_SIZE = 25;
 	
 	/**
 	 * Ação para a criação de um novo componente
@@ -85,8 +85,11 @@ public class ActionComponente extends Action{
 	public String listaComponentes() throws ActionException{		
 		
 		int page = getIntParameter("page", 0);
-
-		List<Componente> componente = DAOFactory.getComponenteDAO().getComponentes(page, PAGE_SIZE);
+		String sistema = getParameter("sistema", "");		
+		
+		int start = (PAGE_SIZE * page);
+		
+		List<Componente> componente = DAOFactory.getComponenteDAO().getComponentes(sistema, start, PAGE_SIZE);
 		int count = DAOFactory.getComponenteDAO().conta();
 		
 		boolean hasNext = (count > (page+1) * PAGE_SIZE);
@@ -96,6 +99,9 @@ public class ActionComponente extends Action{
 		setAttribute("page", page);
 		setAttribute("hasNextPage", hasNext);
 		setAttribute("hasPriorPage", hasPrior);
+		setAttribute("noPriorPage", !hasPrior);
+		setAttribute("noNextPage", !hasNext);
+		
 		return SUCCESS;
 	}
 		

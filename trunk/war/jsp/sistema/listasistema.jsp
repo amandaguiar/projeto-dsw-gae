@@ -1,27 +1,22 @@
 <%@include file="/jsp/template/template.jsp"%>
 
-<style>
-table { width: 600px; }
-td { width: 350px; }
-.ui-datepicker-trigger { margin-bottom: 10px; }
-</style>
 
 <div id="content">
-	<h3>Sistemas</h3>
-	<a class="btn btn-success pull-right" href="/sistema/novoSistema.do">Cadastrar novo sistema</a>
+	<h3>Sistemas</h3>	
+	<a class="btn btn-success" href="/sistema/novoSistema.do">Cadastrar novo sistema</a>
 	<br><br>
-	<table class="table table-bordered table-hover" style="width:auto">
+	<table class="table table-bordered table-hover">
 		<tr>
 		  <th>Nome</th>		
-		  <th style="width:15%"></th>		    		  					
+		  <th></th>		    		  					
 		</tr>
 		
 		<c:forEach var="item" items="${requestScope.item}">
 			<tr>
 				<td>
-					<c:out value="${item.nome}"/>
+					<a href="/componente/listaComponentes.do?sistema=${item.nome}"><c:out value="${item.nome}"/></a>
 				</td>
-				<td style="width:15%">
+				<td>
 					<a href='/sistema/editaSistema.do?id=${item.id}'><i class="icon-pencil"></i></a>					
 					&nbsp;
 					<a href="#"><i class="icon-trash"></i></a>					
@@ -34,8 +29,14 @@ td { width: 350px; }
 		<c:if test="${requestScope.hasPriorPage}">	
 			<li><a href='/sistema/listaSistemas.do?page=${requestScope.page-1}'>Anterior</a></li>	 
 		</c:if>
+		<c:if test="${requestScope.noPriorPage}">	
+			<li class="disabled"><a href="#">Anterior</a></li>	 
+		</c:if>
 		<c:if test="${requestScope.hasNextPage}">	
 			<li><a href='/sistema/listaSistemas.do?page=${requestScope.page+1}'>Próxima</a></li>	
+		</c:if>
+		<c:if test="${requestScope.noNextPage}">	
+			<li class="disabled"><a href="#">Próxima</a></li>	
 		</c:if>
 	</ul>
 

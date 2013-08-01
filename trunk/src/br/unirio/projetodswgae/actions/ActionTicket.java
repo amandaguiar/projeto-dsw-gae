@@ -1,6 +1,7 @@
 package br.unirio.projetodswgae.actions;
 
 import java.util.List;
+import java.util.UUID;
 
 import br.unirio.projetodswgae.dao.DAOFactory;
 import br.unirio.projetodswgae.model.Ticket;
@@ -9,16 +10,18 @@ import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.results.Any;
 import br.unirio.simplemvc.actions.results.Error;
+import br.unirio.simplemvc.actions.results.ErrorRedirect;
 import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
-import br.unirio.simplemvc.utils.Crypto;
 
 public class ActionTicket extends Action{
 
+	public static final int PAGE_SIZE = 25;
+	
 	/**
 	 * Ação para a criação de um novo ticket
 	 */
-	@Any("/jsp/ticket/novoticket.jsp")
+	@Any("/jsp/ticket/ticketform.jsp")
 	public String novoTicket()
 	{
 		Ticket ticket = new Ticket();
@@ -29,8 +32,8 @@ public class ActionTicket extends Action{
 	/**
 	 * Ação de salvamento de novos tickets
 	 */
-	@SuccessRedirect("/login/login.do")
-	@Error("/jsp/ticket/novoticket.jsp")
+	@SuccessRedirect("/ticket/listaTickets.do")
+	@Error("/jsp/ticket/ticketform.jsp")
 	public String salvaTicket() throws ActionException
 	{
 		Usuario usuario = (Usuario) checkLogged();
@@ -53,7 +56,7 @@ public class ActionTicket extends Action{
 		
 		if (ticket.getId() <= 0)
 		{
-			ticket.setIdentificador(Crypto.hash(String.valueOf(id)));
+			ticket.setIdentificador(String.valueOf(UUID.randomUUID()));
 		}
 		
 		// Verifica as regras de negócio
@@ -77,9 +80,36 @@ public class ActionTicket extends Action{
 	public String listaTickets() throws ActionException{
 		Usuario usuario = (Usuario) checkLogged();
 		
-		List<Ticket> tickets = DAOFactory.getTicketDAO().getTickets(usuario.getId());
+		int page = getIntParameter("page", 0);
+		int start = (PAGE_SIZE * page);
+		
+		List<Ticket> tickets = DAOFactory.getTicketDAO().getTickets(usuario.getId(), start, PAGE_SIZE);
+		
+		int count = DAOFactory.getTicketDAO().conta(usuario.getId());
+		
+		boolean hasNext = (count > (page+1) * PAGE_SIZE);
+		boolean hasPrior = (page > 0);
+				
+		setAttribute("page", page);
+		setAttribute("hasNextPage", hasNext);
+		setAttribute("hasPriorPage", hasPrior);
+		setAttribute("noPriorPage", !hasPrior);
+		setAttribute("noNextPage", !hasNext);
 		
 		setAttribute("item", tickets);
 		return SUCCESS;
 	}
+	
+	@ErrorRedirect("/ticket/listaTickets.do")
+	@Success("/jsp/ticket/ticketform.jsp")
+	public String editaTicket() throws ActionException
+	{
+		int id = getIntParameter("id", -1);
+		Ticket ticket = DAOFactory.getTicketDAO().get(id);
+		check(ticket != null, "O ticketnão existe.");		
+		
+		setAttribute("item", ticket);
+		return SUCCESS;
+	}
+	
 }

@@ -10,7 +10,7 @@ public enum StatusTicket {
 	
 private String codigo;
 	
-StatusTicket(String codigo)
+	StatusTicket(String codigo)
 	{
 		this.codigo = codigo;
 	}
