@@ -8,8 +8,8 @@ td { width: 350px; }
 <div id="content">
 	<c:set var="usuario" value="${requestScope.item}" scope="page" />
 	
-	<h3>Usuário</h3>
-		
+	<h3>Usuário</h3>	
+	
 	<form action="/usuario/editaDadosUsuario.do" method="post">
 		<input type="hidden" name="id" value="${usuario.id}"/>
 
@@ -27,4 +27,6 @@ td { width: 350px; }
 
 		<input type="submit" name="btSubmit" value="Enviar Dados" class="btn btn-primary"/><br>
 	</form>
+	
+	<p>Deseja se tornar um usuário operador? Clique <a href="/usuario/solicitaSerOperador.do">aqui</a> para enviar um e-mail para os administradores.</p>
 </div>

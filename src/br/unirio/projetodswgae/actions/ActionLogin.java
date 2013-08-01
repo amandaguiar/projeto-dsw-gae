@@ -4,8 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-import com.google.appengine.api.datastore.Entity;
-
 import br.unirio.projetodswgae.services.GerenciadorEmail;
 import br.unirio.projetodswgae.config.Configuracao;
 import br.unirio.projetodswgae.dao.DAOFactory;
@@ -35,7 +33,7 @@ public class ActionLogin extends Action {
 	 */
 	@DisableUserVerification
 	@Error("/jsp/homepage.jsp")
-	@Success("/login/homepage.do")
+	@Success("/ticket/listaTickets.do")
 	public String login() throws ActionException
 	{
 		if (testLogged() != null)

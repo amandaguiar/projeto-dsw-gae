@@ -57,7 +57,7 @@
 						 <li><a href="/usuario/preparaEdicaoDadosUsuario.do">Editar Perfil</a></li>
 						 <li><a href="/login/preparaTrocaSenha.do">Trocar Senha</a></li> 
 						 <li class="divider"></li>
-						 <li><a href="/login/logout.do"><i class="icon-off"></i> Logout</a></li>
+						 <li><a href="/login/logout.do"><i class="icon-off"></i> Sair</a></li>
 						</ul>					
 					</li>
 				</ul>
@@ -74,27 +74,41 @@
 	<div class="row-fluid">
 		<div class="span3 bs-docs-sidebar">
 			<mvc:checkLogged>
-				<div class="well">
-					<ul class="nav nav-pills nav-stacked">
-						<li class="active"><a href="/login/homepage.do">Início</a></li>
-						
+				<div class="well" style="padding: 15px 0px;">
+					<ul class="nav nav-list" id="menu">
+					
 						<mvc:checkUserLevel level="final">
-						<li><a href="/ticket/listaTickets.do">Meus tickets</a></li>
 						<li class="nav-header">Tickets</li>
+						<li><a href="/ticket/listaTickets.do">Meus tickets</a></li>						
 						<li><a href="/ticket/novoTicket.do">Novo ticket</a></li>
+						<li class="nav-header">Perfil</li>
+						<li><a href="/usuario/preparaEdicaoDadosUsuario.do">Editar perfil</a></li>												
+						<li><a href="/login/preparaTrocaSenha.do">Trocar senha</a></li>
+						<li class="divider"></li>
+						<li><a href="/login/logout.do">Sair</a></li>
 						</mvc:checkUserLevel>
 						
 						<mvc:checkUserLevel level="operador">
 						<li class="nav-header">Tickets</li>
-						<li><a href="#">Meus tickets</a></li>						
+						<li><a href="#">Meus tickets</a></li>
+						<li class="nav-header">Perfil</li>
+						<li><a href="/usuario/preparaEdicaoDadosUsuario.do">Editar perfil</a></li>												
+						<li><a href="/login/preparaTrocaSenha.do">Trocar senha</a></li>
+						<li class="divider"></li>
+						<li><a href="/login/logout.do">Sair</a></li>						
 						</mvc:checkUserLevel>
 						
 						<mvc:checkUserLevel level="adm">				
 						<li class="nav-header">Administração</li>
 						<li><a href="/sistema/listaSistemas.do">Sistemas</a></li>
 						<li><a href="/componente/listaComponentes.do">Componentes</a></li>
-						<li><a href="#">Tickets</a></li>						
-						<li><a href="#">Usuários</a></li>
+						<li><a href="/ticket/listaTickets.do">Tickets</a></li>						
+						<li><a href="/usuario/listaUsuarios.do">Usuários</a></li>
+						<li class="nav-header">Perfil</li>
+						<li><a href="/usuario/preparaEdicaoDadosUsuario.do">Editar perfil</a></li>												
+						<li><a href="/login/preparaTrocaSenha.do">Trocar senha</a></li>
+						<li class="divider"></li>
+						<li><a href="/login/logout.do">Sair</a></li>
 						</mvc:checkUserLevel>
 						
 					</ul>
@@ -154,13 +168,13 @@ $(document).ready(function() {
 	var divNoticeP = divNotice.find("p");
 	if (divNoticeP.length > 0) divNotice.html(divNoticeP.text()).show();
 	
-	$('.well > ul > li').click(function(e){
-		if (!$this.hasClass('active')) {
-			$this.addClass('active');
-		}
-		
-	});
+	var url = window.location;
+    $('#menu > li > a[href="'+ url +'"]').parent().addClass('active');
+    $('#menu > li > a').filter(function() {
+         return this.href == url;
+    }).parent().addClass('active');
 });
+
 </script>
 
 </body>

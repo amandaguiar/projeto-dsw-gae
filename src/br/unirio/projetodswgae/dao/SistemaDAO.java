@@ -3,10 +3,8 @@ package br.unirio.projetodswgae.dao;
 import java.util.List;
 
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Query.FilterOperator;
-
+import br.unirio.projetodswgae.model.Componente;
 import br.unirio.projetodswgae.model.Sistema;
-import br.unirio.projetodswgae.model.Ticket;
 import br.unirio.simplemvc.gae.datastore.AbstractDAO;
 
 public class SistemaDAO extends AbstractDAO<Sistema>  {
@@ -40,8 +38,8 @@ public class SistemaDAO extends AbstractDAO<Sistema>  {
 	 * Retorna os sistemas cadastrados
 	 */
 	
-	public List<Sistema> getSistemas(int page, int page_size){
-		return list(page, page_size);
+	public List<Sistema> getSistemas(int start, int page_size){
+		return list(start, page_size);
 	}
 
 	/**
@@ -49,6 +47,14 @@ public class SistemaDAO extends AbstractDAO<Sistema>  {
 	 */
 	public int conta() {
 		return count();
+	}
+	
+	/**
+	 * Retorna os componentes desse sistema
+	 */
+	public List<Componente> getComponentesSistema(String nome) {
+		List<Componente> componentes = DAOFactory.getComponenteDAO().getComponentes(nome);
+		return componentes;
 	}
 	
 }
