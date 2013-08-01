@@ -8,7 +8,7 @@ td { width: 350px; }
 
 <div id="content">
 	<h3>Sistemas</h3>
-	<a class="btn btn-success" href="/sistema/novoSistema.do">Cadastrar novo sistema</a>
+	<a class="btn btn-success pull-right" href="/sistema/novoSistema.do">Cadastrar novo sistema</a>
 	<br><br>
 	<table class="table table-bordered table-hover" style="width:auto">
 		<tr>

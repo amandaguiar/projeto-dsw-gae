@@ -3,7 +3,6 @@ package br.unirio.projetodswgae.actions;
 import java.util.List;
 
 import br.unirio.projetodswgae.model.Componente;
-import br.unirio.projetodswgae.model.Sistema;
 import br.unirio.projetodswgae.model.TipoUsuario;
 import br.unirio.projetodswgae.model.Usuario;
 import br.unirio.simplemvc.actions.Action;

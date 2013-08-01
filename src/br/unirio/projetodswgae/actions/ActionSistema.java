@@ -3,8 +3,6 @@ package br.unirio.projetodswgae.actions;
 import java.util.List;
 
 import br.unirio.projetodswgae.model.Sistema;
-import br.unirio.projetodswgae.model.Ticket;
-import br.unirio.projetodswgae.model.Usuario;
 import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.results.Any;

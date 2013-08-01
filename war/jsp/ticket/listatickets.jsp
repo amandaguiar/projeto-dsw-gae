@@ -9,9 +9,10 @@ td { width: 350px; }
 <div id="content">
 	<h3>Meus Tickets</h3>
 	
-	<table>
+	<table class="table table-bordered table-hover" style="width:auto">
 		<tr>
 		  <th>Titulo</th>
+		  <th>Descrição</th>		  
 		  <th>Sistema</th>																
 		  <th>Componente</th>
 		  <th>Status</th>							
@@ -19,16 +20,19 @@ td { width: 350px; }
 		
 		<c:forEach var="item" items="${requestScope.item}">
 			<tr>
-				<td colspan="2">
-					<c:out value="${item.titulo}"/>&nbsp;
+				<td>
+					<c:out value="${item.titulo}"/>
 				</td>
-				<td colspan="2">
+				<td>
+					<c:out value="${item.descricao}"/>&nbsp;
+				</td>
+				<td>
 					<c:out value="${item.sistema}"/>
 				</td>
-				<td colspan="2">
+				<td>
 					<c:out value="${item.componente}"/>
 				</td>
-				<td colspan="2">
+				<td>
 					<c:out value="${item.status}"/>
 				</td>
 			</tr>
