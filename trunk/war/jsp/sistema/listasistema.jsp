@@ -10,10 +10,10 @@ td { width: 350px; }
 	<h3>Sistemas</h3>
 	<a class="btn btn-success" href="/sistema/novoSistema.do">Cadastrar novo sistema</a>
 	<br><br>
-	<table class="table table-bordered table-hover">
+	<table class="table table-bordered table-hover" style="width:auto">
 		<tr>
 		  <th>Nome</th>		
-		  <th></th>		    		  					
+		  <th style="width:15%"></th>		    		  					
 		</tr>
 		
 		<c:forEach var="item" items="${requestScope.item}">
@@ -21,7 +21,7 @@ td { width: 350px; }
 				<td>
 					<c:out value="${item.nome}"/>
 				</td>
-				<td>
+				<td style="width:15%">
 					<a href='/sistema/editaSistema.do?id=${item.id}'><i class="icon-pencil"></i></a>					
 					&nbsp;
 					<a href="#"><i class="icon-trash"></i></a>					
