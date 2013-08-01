@@ -8,15 +8,15 @@ td { width: 350px; }
 
 <div id="content">
 	<h3>Componentes</h3>
-	<a href="/componente/novoComponente.do">Cadastrar novo componente</a>
+	<a class="btn btn-success" href="/componente/novoComponente.do">Cadastrar novo componente</a>
 	<br><br>
 	<table class="table table-bordered table-hover">
 		<tr>
 		  <th>Nome</th>
 		  <th>Sistema</th>
-		  <th>E-mail Responsável</th>							
+		  <th>E-mail Responsável</th>		
+		  <th></th>					
 		</tr>
-		
 		<c:forEach var="item" items="${requestScope.item}">
 			<tr>
 				<td>
@@ -27,6 +27,11 @@ td { width: 350px; }
 				</td>
 				<td>
 					<c:out value="${item.emailOperadorResponsavel}"/>&nbsp;
+				</td>
+				<td>
+					<a href='/componente/editaComponente.do?id=${item.id}'><i class="icon-pencil"></i></a>					
+					&nbsp;
+					<a href="#"><i class="icon-trash"></i></a>					
 				</td>
 			</tr>
 		</c:forEach>

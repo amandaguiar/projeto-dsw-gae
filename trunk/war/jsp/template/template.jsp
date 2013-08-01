@@ -23,6 +23,7 @@
 	<link href="/css/template.css" rel="stylesheet">
 	
 	<script src="/js/jquery/jquery.min.js"></script>
+	<script src="/js/twitter/bootstrap.min.js"></script>
 	
 	<link rel="shortcut icon" href="/favicon.ico">
 	
@@ -45,12 +46,25 @@
 			<a class="brand" href="../../index.html">Projeto DSW</a>	
 					
 			<mvc:checkLogged>
-			<div class="nav-collapse collapse">
-				<p class="navbar-text pull-right"> 
-					Olá, <c:out value="${usuarioLogado.nome}"/>! Último login em: &nbsp;&nbsp; | <a href="/login/preparaTrocaSenha.do">Trocar Senha</a> | <a href="/login/logout.do">Logout</a>
-				</p>
-				<ul class="nav">
+			<div class="nav-collapse collapse navbar-responsive-collapse">
+				<ul class="nav pull-right">
+					<li class="dropdown">											
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+							<c:out value="${usuarioLogado.nome}"/>&nbsp;<c:out value="${usuarioLogado.sobrenome}"/>
+							<b class="caret"></b>						
+						</a>
+						<ul class="dropdown-menu">
+						 <li><a href="/usuario/preparaEdicaoDadosUsuario.do">Editar Perfil</a></li>
+						 <li><a href="/login/preparaTrocaSenha.do">Trocar Senha</a></li> 
+						 <li class="divider"></li>
+						 <li><a href="/login/logout.do"><i class="icon-off"></i> Logout</a></li>
+						</ul>					
+					</li>
 				</ul>
+			
+				<div class="navbar-text pull-right"> 
+					Último login em: &nbsp;
+				</div>
 			</div>
 			</mvc:checkLogged>
 		</div>
