@@ -10,12 +10,12 @@ td { width: 350px; }
 	<h3>Componentes</h3>
 	<a class="btn btn-success" href="/componente/novoComponente.do">Cadastrar novo componente</a>
 	<br><br>
-	<table class="table table-bordered table-hover">
+	<table class="table table-bordered table-hover" style="width:auto">
 		<tr>
 		  <th>Nome</th>
 		  <th>Sistema</th>
 		  <th>E-mail Responsável</th>		
-		  <th></th>					
+		  <th style="width:6%"></th>					
 		</tr>
 		<c:forEach var="item" items="${requestScope.item}">
 			<tr>
@@ -28,7 +28,7 @@ td { width: 350px; }
 				<td>
 					<c:out value="${item.emailOperadorResponsavel}"/>&nbsp;
 				</td>
-				<td>
+				<td style="width:6%">
 					<a href='/componente/editaComponente.do?id=${item.id}'><i class="icon-pencil"></i></a>					
 					&nbsp;
 					<a href="#"><i class="icon-trash"></i></a>					

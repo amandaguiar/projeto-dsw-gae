@@ -79,23 +79,17 @@
 						<li class="active"><a href="/login/homepage.do">Início</a></li>
 						
 						<mvc:checkUserLevel level="final">
-						<li class="nav-header">Meus dados</li>
-						<li><a href="/usuario/preparaEdicaoDadosUsuario.do">Meu perfil</a></li>
 						<li><a href="/ticket/listaTickets.do">Meus tickets</a></li>
 						<li class="nav-header">Tickets</li>
 						<li><a href="/ticket/novoTicket.do">Novo ticket</a></li>
 						</mvc:checkUserLevel>
 						
 						<mvc:checkUserLevel level="operador">
-						<li class="nav-header">Meus dados</li>s
-						<li><a href="#">Meu perfil</a></li>
 						<li class="nav-header">Tickets</li>
 						<li><a href="#">Meus tickets</a></li>						
 						</mvc:checkUserLevel>
 						
-						<mvc:checkUserLevel level="adm">
-						<li class="nav-header">Meus dados</li>
-						<li><a href="#">Meu perfil</a></li>						
+						<mvc:checkUserLevel level="adm">				
 						<li class="nav-header">Administração</li>
 						<li><a href="/sistema/listaSistemas.do">Sistemas</a></li>
 						<li><a href="/componente/listaComponentes.do">Componentes</a></li>
@@ -158,7 +152,14 @@ $(document).ready(function() {
 	
 	var divNotice = $("div.notice");
 	var divNoticeP = divNotice.find("p");
-	if (divNoticeP.length > 0) divNotice.html(divNoticeP.text()).show(); 
+	if (divNoticeP.length > 0) divNotice.html(divNoticeP.text()).show();
+	
+	$('.well > ul > li').click(function(e){
+		if (!$this.hasClass('active')) {
+			$this.addClass('active');
+		}
+		
+	});
 });
 </script>
 
