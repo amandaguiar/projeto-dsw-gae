@@ -9,6 +9,7 @@ import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.results.Any;
 import br.unirio.simplemvc.actions.results.Error;
+import br.unirio.simplemvc.actions.results.ErrorRedirect;
 import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
 import br.unirio.projetodswgae.dao.DAOFactory;
@@ -32,7 +33,7 @@ public class ActionSistema extends Action{
 	/**
 	 * Ação de salvamento de novos componentes
 	 */
-	@SuccessRedirect("/jsp/sistema/listasistema.jsp")
+	@SuccessRedirect("/sistema/listaSistemas.do")
 	@Error("/jsp/sistema/sistemaform.jsp")
 	public String salvaSistema() throws ActionException
 	{
@@ -81,4 +82,17 @@ public class ActionSistema extends Action{
 		setAttribute("hasPriorPage", hasPrior);
 		return SUCCESS;
 	}
+	
+	@ErrorRedirect("/sistema/listaSistemas.do")
+	@Success("/jsp/sistema/sistemaform.jsp")
+	public String editaSistema() throws ActionException
+	{
+		int id = getIntParameter("id", -1);
+		Sistema sistema = DAOFactory.getSistemaDAO().get(id);
+		check(sistema != null, "O sistema não existe.");		
+		
+		setAttribute("item", sistema);
+		return SUCCESS;
+	}
+	
 }

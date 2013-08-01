@@ -8,12 +8,12 @@ td { width: 350px; }
 
 <div id="content">
 	<h3>Sistemas</h3>
-	<a href="/sistema/novoSistema.do">Cadastrar novo sistema</a>
+	<a class="btn btn-success" href="/sistema/novoSistema.do">Cadastrar novo sistema</a>
 	<br><br>
 	<table class="table table-bordered table-hover">
 		<tr>
 		  <th>Nome</th>		
-		  <th></th>		  					
+		  <th></th>		    		  					
 		</tr>
 		
 		<c:forEach var="item" items="${requestScope.item}">
@@ -22,7 +22,9 @@ td { width: 350px; }
 					<c:out value="${item.nome}"/>
 				</td>
 				<td>
-					<a href="#">Deletar</a>					
+					<a href='/sistema/editaSistema.do?id=${item.id}'><i class="icon-pencil"></i></a>					
+					&nbsp;
+					<a href="#"><i class="icon-trash"></i></a>					
 				</td>
 			</tr>
 		</c:forEach>

@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import com.google.appengine.api.datastore.Entity;
+
 import br.unirio.projetodswgae.services.GerenciadorEmail;
 import br.unirio.projetodswgae.config.Configuracao;
 import br.unirio.projetodswgae.dao.DAOFactory;
@@ -71,7 +73,8 @@ public class ActionLogin extends Action {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			addNotice("Seu último login no sistema foi realizado em " + sdf.format(dataUltimoLogin) + " hr.");
 		}
-
+		
+		
 		DAOFactory.getUsuarioLoginDAO().registraLoginSucesso(usuario.getId());
 		setCurrentUser(usuario);
 		return SUCCESS;

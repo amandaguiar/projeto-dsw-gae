@@ -10,6 +10,7 @@ import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.results.Any;
 import br.unirio.simplemvc.actions.results.Error;
+import br.unirio.simplemvc.actions.results.ErrorRedirect;
 import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
 import br.unirio.projetodswgae.dao.DAOFactory;
@@ -33,7 +34,7 @@ public class ActionComponente extends Action{
 	/**
 	 * Ação de salvamento de novos componentes
 	 */
-	@SuccessRedirect("/login/login.do")
+	@SuccessRedirect("/componente/listaComponentes.do")
 	@Error("/jsp/componente/componenteform.jsp")
 	public String salvaComponente() throws ActionException
 	{
@@ -67,8 +68,6 @@ public class ActionComponente extends Action{
 		}
 		check(!componenteExistente, "O sistema escolhido possui um componente com este nome.");
 		
-		
-		
 		checkNonEmpty(componente.getEmailOperadorResponsavel(), "O email do operador não pode ser vazio.");
 		checkEmail(componente.getEmailOperadorResponsavel(), "O e-mail do operador não está seguindo um formato válido.");
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioEmail(componente.getEmailOperadorResponsavel());
@@ -100,4 +99,17 @@ public class ActionComponente extends Action{
 		setAttribute("hasPriorPage", hasPrior);
 		return SUCCESS;
 	}
+		
+	@ErrorRedirect("/componente/listaComponentes.do")
+	@Success("/jsp/componente/componenteform.jsp")
+	public String editaComponente() throws ActionException
+	{
+		int id = getIntParameter("id", -1);
+		Componente componente = DAOFactory.getComponenteDAO().get(id);
+		check(componente != null, "O componente não existe.");		
+		
+		setAttribute("item", componente);
+		return SUCCESS;
+	}
+	
 }
