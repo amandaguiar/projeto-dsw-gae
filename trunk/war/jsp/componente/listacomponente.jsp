@@ -8,7 +8,7 @@ td { width: 350px; }
 
 <div id="content">
 	<h3>Componentes</h3>
-	<a class="btn btn-success" href="/componente/novoComponente.do">Cadastrar novo componente</a>
+	<a class="btn btn-success pull-right" href="/componente/novoComponente.do">Cadastrar novo componente</a>
 	<br><br>
 	<table class="table table-bordered table-hover" style="width:auto">
 		<tr>
