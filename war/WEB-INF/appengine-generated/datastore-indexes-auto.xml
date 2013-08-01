@@ -1,11 +1,4 @@
-<!-- Indices written at Sun, 28 Jul 2013 18:34:40 BRT -->
+<!-- Indices written at Wed, 31 Jul 2013 23:33:29 BRT -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-    <!-- Used 5 times in query history -->
-    <datastore-index kind="Componente" ancestor="false" source="auto">
-        <property name="sistema" direction="asc"/>
-        <property name="nome" direction="asc"/>
-    </datastore-index>
-
-</datastore-indexes>
