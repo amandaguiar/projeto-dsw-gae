@@ -28,4 +28,5 @@
     http://code.google.com/appengine/docs/java/config/appconfig.html#Enabling_Sessions
   -->
 <sessions-enabled>true</sessions-enabled>
+<auto-id-policy>legacy</auto-id-policy>
 </appengine-web-app>
