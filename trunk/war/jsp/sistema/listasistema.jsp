@@ -11,15 +11,22 @@
 		  <th></th>		    		  					
 		</tr>
 		
-		<c:forEach var="item" items="${requestScope.item}">
+		<c:forEach var="item" items="${requestScope.item}" varStatus="stat">
+			<c:set var="i" value="confirmacaoRemocao${stat.count}" />
 			<tr>
 				<td>
 					<a href="/componente/listaComponentes.do?sistema=${item.nome}"><c:out value="${item.nome}"/></a>
 				</td>
 				<td>
-					<a href='/sistema/editaSistema.do?id=${item.id}'><i class="icon-pencil"></i></a>					
-					&nbsp;
-					<a href="#"><i class="icon-trash"></i></a>					
+					<div id="${i}" style="visibility:hidden">
+						<a style="visibility:visible" href='/sistema/editaSistema.do?id=${item.id}'><i class="icon-pencil"></i></a>
+ 						&nbsp;
+						<a href="#" style="visibility:visible" onclick="confirmacaoRemover('${i}')"><i class="icon-trash"></i></a>
+ 						&nbsp; Tem certeza de que deseja deletar o sistema? &nbsp; &nbsp;
+						<a href="/sistema/removeSistema.do?id=${item.id}">Sim</i></a> &nbsp; &nbsp; &nbsp;
+						<a href="#" onclick="cancelarRemocao('${i}')" >Nao</i></a>
+						
+					</div>
 				</td>
 			</tr>
 		</c:forEach>
@@ -41,3 +48,15 @@
 	</ul>
 
 </div>
+
+<script>
+function confirmacaoRemover(id)
+{
+	document.getElementById(id).style.visibility="visible";
+}
+
+function cancelarRemocao(id)
+{
+	document.getElementById(id).style.visibility="hidden";
+}
+</script>

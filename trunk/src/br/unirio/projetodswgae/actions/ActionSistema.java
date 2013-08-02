@@ -92,7 +92,11 @@ public class ActionSistema extends Action{
 		
 		return SUCCESS;
 	}
-	
+
+	/**
+	 * 
+	 * Ação para editar um sistema cadastrado
+	 */
 	@ErrorRedirect("/sistema/listaSistemas.do")
 	@Success("/jsp/sistema/sistemaform.jsp")
 	public String editaSistema() throws ActionException
@@ -102,6 +106,22 @@ public class ActionSistema extends Action{
 		check(sistema != null, "O sistema não existe.");		
 		
 		setAttribute("item", sistema);
+		return SUCCESS;
+	}
+	
+	/**
+	 * 
+	 * Ação para remover um sistema cadastrado
+	 */
+	@SuccessRedirect("/sistema/listaSistemas.do")
+	@Error("/jsp/sistema/sistemaform.jsp")
+	public String removeSistema() throws ActionException{
+		int id = getIntParameter("id", -1);
+		Sistema sistema = DAOFactory.getSistemaDAO().get(id);
+		check(sistema != null, "O sistema não existe");
+		//TODO Implementar Checks que faltam
+		DAOFactory.getSistemaDAO().remove((long)id);
+		addRedirectNotice("O sistema selecionado foi removido com sucesso");
 		return SUCCESS;
 	}
 	
