@@ -2,6 +2,7 @@ package br.unirio.projetodswgae.actions;
 
 import java.util.List;
 
+import br.unirio.projetodswgae.dao.DAOFactory;
 import br.unirio.projetodswgae.model.Componente;
 import br.unirio.projetodswgae.model.TipoUsuario;
 import br.unirio.projetodswgae.model.Usuario;
@@ -12,7 +13,6 @@ import br.unirio.simplemvc.actions.results.Error;
 import br.unirio.simplemvc.actions.results.ErrorRedirect;
 import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
-import br.unirio.projetodswgae.dao.DAOFactory;
 
 public class ActionComponente extends Action{
 	
@@ -114,6 +114,22 @@ public class ActionComponente extends Action{
 		check(componente != null, "O componente não existe.");		
 		
 		setAttribute("item", componente);
+		return SUCCESS;
+	}
+	
+	/**
+	 * Ação para remover um componente cadastrado
+	 */
+	@Any("/componente/listaComponentes.do")
+	public String removeComponente() throws ActionException{
+		int id = getIntParameter("id", -1);
+		Componente componente = DAOFactory.getComponenteDAO().get(id);
+		check(componente != null, "O componente não existe");
+		check(DAOFactory.getTicketDAO().getTicketsComponenteSistema(componente.getNome(), componente.getSistema()).size() == 0, 
+				"O componente não foi deletado, pois possui um ou mais tickets.");
+		
+		DAOFactory.getComponenteDAO().remove((long)id);
+		addRedirectNotice("O componente selecionado foi removido com sucesso");
 		return SUCCESS;
 	}
 	

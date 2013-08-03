@@ -23,8 +23,11 @@
  						&nbsp;
 						<a href="#" style="visibility:visible" onclick="confirmacaoRemover('${i}')"><i class="icon-trash"></i></a>
  						&nbsp; Tem certeza de que deseja deletar o sistema? &nbsp; &nbsp;
-						<a href="/sistema/removeSistema.do?id=${item.id}">Sim</i></a> &nbsp; &nbsp; &nbsp;
-						<a href="#" onclick="cancelarRemocao('${i}')" >Nao</i></a>
+						<a href="/sistema/removeSistema.do?id=${item.id}">Sim</a> 
+						&nbsp; 
+						&nbsp; 
+						&nbsp;
+						<a href="#" onclick="cancelarRemocao('${i}')" >Nao</a>
 						
 					</div>
 				</td>

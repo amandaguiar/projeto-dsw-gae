@@ -83,7 +83,7 @@ public class ActionTicket extends Action{
 		int page = getIntParameter("page", 0);
 		int start = (PAGE_SIZE * page);
 		
-		List<Ticket> tickets = DAOFactory.getTicketDAO().getTickets(usuario.getId(), start, PAGE_SIZE);
+		List<Ticket> tickets = DAOFactory.getTicketDAO().getTicketsUsuario(usuario.getId(), start, PAGE_SIZE);
 		
 		int count = DAOFactory.getTicketDAO().conta(usuario.getId());
 		
