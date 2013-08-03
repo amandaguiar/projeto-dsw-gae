@@ -2,6 +2,7 @@ package br.unirio.projetodswgae.actions;
 
 import java.util.List;
 
+import br.unirio.projetodswgae.dao.DAOFactory;
 import br.unirio.projetodswgae.model.Componente;
 import br.unirio.projetodswgae.model.Sistema;
 import br.unirio.simplemvc.actions.Action;
@@ -11,7 +12,6 @@ import br.unirio.simplemvc.actions.results.Error;
 import br.unirio.simplemvc.actions.results.ErrorRedirect;
 import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
-import br.unirio.projetodswgae.dao.DAOFactory;
 
 public class ActionSistema extends Action{
 
@@ -57,7 +57,7 @@ public class ActionSistema extends Action{
 		Sistema sistema2 = DAOFactory.getSistemaDAO().getNomeSistema(sistema.getNome());
 		check(sistema2 == null || sistema2.getId() == sistema.getId(), "Já existe um sistema com esse nome.");
 		
-		Iterable<Componente> componentes = DAOFactory.getSistemaDAO().getComponentesSistema(nomeAntigo);
+		Iterable<Componente> componentes = DAOFactory.getComponenteDAO().getComponentesSistema(nomeAntigo);
 		for (Componente comp : componentes) {
 			comp.setSistema(sistema.getNome());
 			DAOFactory.getComponenteDAO().put(comp);
@@ -113,13 +113,13 @@ public class ActionSistema extends Action{
 	 * 
 	 * Ação para remover um sistema cadastrado
 	 */
-	@SuccessRedirect("/sistema/listaSistemas.do")
-	@Error("/jsp/sistema/sistemaform.jsp")
+	@Any("/sistema/listaSistemas.do")
 	public String removeSistema() throws ActionException{
 		int id = getIntParameter("id", -1);
 		Sistema sistema = DAOFactory.getSistemaDAO().get(id);
 		check(sistema != null, "O sistema não existe");
-		//TODO Implementar Checks que faltam
+		check(DAOFactory.getComponenteDAO().getComponentesSistema(sistema.getNome()).size() == 0, "O sistema não foi deletado, pois possui componentes.");
+		
 		DAOFactory.getSistemaDAO().remove((long)id);
 		addRedirectNotice("O sistema selecionado foi removido com sucesso");
 		return SUCCESS;

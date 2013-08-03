@@ -1,5 +1,6 @@
 <%@include file="/jsp/template/template.jsp"%>
 
+
 <div id="content">
 	<h3>Componentes</h3>
 	<a class="btn btn-success" href="/componente/novoComponente.do">Cadastrar novo componente</a>
@@ -11,7 +12,8 @@
 		  <th>E-mail Responsável</th>		
 		  <th></th>					
 		</tr>
-		<c:forEach var="item" items="${requestScope.item}">
+		<c:forEach var="item" items="${requestScope.item}" varStatus="stat">
+			<c:set var="i" value="confirmacaoRemocao${stat.count}" />
 			<tr>
 				<td>
 					<c:out value="${item.nome}"/>&nbsp;
@@ -23,9 +25,17 @@
 					<c:out value="${item.emailOperadorResponsavel}"/>&nbsp;
 				</td>
 				<td>
-					<a href='/componente/editaComponente.do?id=${item.id}'><i class="icon-pencil"></i></a>					
-					&nbsp;
-					<a href="#"><i class="icon-trash"></i></a>					
+					<div id="${i}" style="visibility:hidden">
+						<a style="visibility:visible" href='/componente/editaComponente.do?id=${item.id}'><i class="icon-pencil"></i></a>					
+						&nbsp;
+						<a href="#" style="visibility:visible" onclick="confirmacaoRemover('${i}')"><i class="icon-trash"></i></a>
+						&nbsp; Tem certeza de que deseja deletar o componente? &nbsp; &nbsp;
+						<a href="/componente/removeComponente.do?id=${item.id}">Sim</a> 
+						&nbsp; 
+						&nbsp; 
+						&nbsp;
+						<a href="#" onclick="cancelarRemocao('${i}')" >Nao</a>
+					</div>				
 				</td>
 			</tr>
 		</c:forEach>
@@ -46,3 +56,15 @@
 		</c:if>
 	</ul>
 </div>
+
+<script>
+function confirmacaoRemover(id)
+{
+	document.getElementById(id).style.visibility="visible";
+}
+
+function cancelarRemocao(id)
+{
+	document.getElementById(id).style.visibility="hidden";
+}
+</script>

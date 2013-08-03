@@ -50,8 +50,16 @@ public class TicketDAO extends AbstractDAO<Ticket> {
 	 * Retorna uma lista de tickets de um usuário
 	 * 
 	 */
-	public List<Ticket> getTickets(int id_usuario, int start, int page_size){
+	public List<Ticket> getTicketsUsuario(int id_usuario, int start, int page_size){
 		return list(start, page_size, exactFilter("id_usuario", FilterOperator.EQUAL, id_usuario));
+	}
+	
+	/**
+	 * Retorna uma lista de tickets de um componente de um sistema
+	 */
+	public List<Ticket> getTicketsComponenteSistema(String componente, String sistema){
+		return list(and(exactFilter("componente", FilterOperator.EQUAL, componente),
+						exactFilter("sistema", FilterOperator.EQUAL, sistema)));
 	}
 	
 	public int conta(int id_usuario) {

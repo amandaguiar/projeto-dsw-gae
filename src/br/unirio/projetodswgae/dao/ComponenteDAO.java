@@ -15,7 +15,6 @@ import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
-import com.google.appengine.api.datastore.Query.SortDirection;
 
 public class ComponenteDAO extends AbstractDAO<Componente>{
 
@@ -43,10 +42,10 @@ public class ComponenteDAO extends AbstractDAO<Componente>{
 		e.setProperty("sistema", componente.getSistema());
 	}
 	
-	public Iterable<Componente> getComponentesSistema(String sistema)
+/*	public Iterable<Componente> getComponentesSistema(String sistema)
 	{
 		return list(exactFilter("sistema", FilterOperator.EQUAL, sistema), "nome", SortDirection.ASCENDING);
-	}
+	}*/
 	
 	/**
 	 * 
@@ -76,7 +75,10 @@ public class ComponenteDAO extends AbstractDAO<Componente>{
 		return list(start, page_size, exactFilter("sistema", FilterOperator.EQUAL, sistema));		
 	}
 	
-	public List<Componente> getComponentes(String sistema) {
+	/**
+	 * Retorna os componentes de um sistema
+	 */
+	public List<Componente> getComponentesSistema(String sistema) {
 		return list(exactFilter("sistema", FilterOperator.EQUAL, sistema));
 	}
 
