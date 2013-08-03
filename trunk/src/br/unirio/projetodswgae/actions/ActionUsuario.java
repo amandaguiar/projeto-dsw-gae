@@ -66,7 +66,7 @@ public class ActionUsuario extends Action {
 	 * Ação para listar usuários 
 	 */
 
-	//verificar se é administrador
+	//TODO verificar se é administrador
 	@Success("/jsp/usuario/listausuario.jsp")
 	@Error("/login/login.do")
 	public String listaUsuarios() throws ActionException{		
@@ -106,7 +106,7 @@ public class ActionUsuario extends Action {
 		Iterable<Usuario> usuarios = DAOFactory.getUsuarioDAO().getAdministradores();
 		for (Usuario usu : usuarios) {
 			envioOK = GerenciadorEmail.getInstance().envia(usu.getNome(), usu.getEmail(), "Solicitacao de promocao a operador", corpo);
-			check(envioOK, "Ocorreu um erro ao enviar um e-mail com sua senha.");	
+			check(envioOK, "Ocorreu um erro ao enviar sua solicitação");
 		}
 		
 		return addRedirectNotice("E-mail enviado com sucesso.");
