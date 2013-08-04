@@ -10,9 +10,9 @@ public class Ticket implements DataObject{
 	private String titulo;
 	private String sistema;
 	private String componente;
-	private String descricao;
-	private StatusTicket statusAntigo;
+	private String descricao;	
 	private StatusTicket statusAtual;
+	private String comentario;
 	private String emailOperadorResponsavel;
 	
 	public Ticket() {
@@ -21,8 +21,7 @@ public class Ticket implements DataObject{
 		this.titulo = "";
 		this.sistema = "";
 		this.componente = "";
-		this.descricao = "";
-		this.statusAntigo = StatusTicket.NOVO;
+		this.descricao = "";		
 		this.statusAtual = StatusTicket.NOVO;
 		this.emailOperadorResponsavel = "";
 	}
@@ -64,32 +63,28 @@ public class Ticket implements DataObject{
 	}
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-	public StatusTicket getStatusAntigo() {
-		return statusAntigo;
-	}
-	public void setStatusAntigo(StatusTicket statusAntigo) {
-		this.statusAntigo = statusAntigo;
-	}
-	
+	}	
 	public StatusTicket getStatusAtual() {
 		return statusAtual;
 	}
 	public void setStatusAtual(StatusTicket statusAtual) {
 		this.statusAtual = statusAtual;
 	}
-	
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+	public String getComentario() {
+		return comentario;
+	}
 	public String getEmailOperadorResponsavel() {
 		return emailOperadorResponsavel;
 	}
 	public void setEmailOperadorResponsavel(String emailOperadorResponsavel) {
 		this.emailOperadorResponsavel = emailOperadorResponsavel;
 	}
-
 	public int getId_usuario() {
 		return id_usuario;
 	}
-
 	public void setId_usuario(int id_usuario) {
 		this.id_usuario = id_usuario;
 	}
