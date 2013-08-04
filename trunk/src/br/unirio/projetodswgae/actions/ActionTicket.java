@@ -6,6 +6,7 @@ import java.util.UUID;
 import br.unirio.projetodswgae.dao.DAOFactory;
 import br.unirio.projetodswgae.model.StatusTicket;
 import br.unirio.projetodswgae.model.Ticket;
+import br.unirio.projetodswgae.model.TipoUsuario;
 import br.unirio.projetodswgae.model.Usuario;
 import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
@@ -52,10 +53,10 @@ public class ActionTicket extends Action{
 		ticket.setDescricao(getParameter("descricao", ""));
 		ticket.setSistema(getParameter("sistema", ""));
 		ticket.setComponente(getParameter("componente", ""));
-		ticket.setEmailOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
+		if(!ticket.getComponente().isEmpty())
+			ticket.setEmailOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
 		
-		StatusTicket statusAtual = ticket.getStatusAtual();
-		StatusTicket novoStatus = null;
+		StatusTicket novoStatus = StatusTicket.get(getParameter("statusAtual", ""));
 		
 		/* verifica se é um ticket novo, senão é uma edição de ticket */
 		if (ticket.getId() <= 0)
@@ -63,8 +64,7 @@ public class ActionTicket extends Action{
 			ticket.setId_usuario(usuario.getId());
 			ticket.setIdentificador(String.valueOf(UUID.randomUUID()));
 		}
-		else{
-			novoStatus = StatusTicket.get(getParameter("statusAtual", ""));
+		else if(novoStatus != null){
 			ticket.setStatusAtual(novoStatus);
 		}
 		
@@ -123,13 +123,33 @@ public class ActionTicket extends Action{
 		return SUCCESS;
 	}
 	
-	/*public void verificaStatus(String idTicket, String statusAntigo, String statusAtual, String tipoUsuario, Status){
-		if(idTicket.equals("-1") -> Novo
+	/**
+	 * Verifica quais status devem aparecer no form para o usuario
+	 * @param statusAntigo
+	 * @param statusAtual
+	 * @param tipoUsuario
+	 * @param statusTicket
+	 */
+	public static void verificaRegrasStatus(String statusAntigo, String statusAtual, String tipoUsuario, List<String> statusTicket){
 		
-		Novo OU Reaberto -> Resolvido OU Invalidado
+		if( (tipoUsuario.equalsIgnoreCase(TipoUsuario.OPERADOR.getNome())) && 
+		    (statusAtual.equalsIgnoreCase(StatusTicket.NOVO.getCodigo()) || statusAtual.equalsIgnoreCase(StatusTicket.REABERTO.getCodigo())) ){
+			statusTicket.add(StatusTicket.RESOLVIDO.getCodigo());
+			statusTicket.add(StatusTicket.INVALIDADO.getCodigo());
+		}
+		else if( (tipoUsuario.equalsIgnoreCase(TipoUsuario.USUARIO_FINAL.getNome())) &&
+				(statusAtual.equalsIgnoreCase(StatusTicket.RESOLVIDO.getCodigo()) || statusAtual.equalsIgnoreCase(StatusTicket.INVALIDADO.getCodigo())) ){
+			statusTicket.add(StatusTicket.REABERTO.getCodigo());
+			statusTicket.add(StatusTicket.FECHADO.getCodigo());
+		}
+		else if(tipoUsuario.equalsIgnoreCase(TipoUsuario.ADMINISTRADOR.getNome())){
+			statusTicket.add(StatusTicket.NOVO.getCodigo());
+			statusTicket.add(StatusTicket.RESOLVIDO.getCodigo());
+			statusTicket.add(StatusTicket.INVALIDADO.getCodigo());
+			statusTicket.add(StatusTicket.REABERTO.getCodigo());
+			statusTicket.add(StatusTicket.FECHADO.getCodigo());
+		}
 		
-		Resolvido OU Invalidado -> Reaberto OU Fechado
 		
-		
-	}*/
+	}
 }
