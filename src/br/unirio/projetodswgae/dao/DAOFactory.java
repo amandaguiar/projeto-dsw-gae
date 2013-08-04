@@ -11,6 +11,7 @@ public class DAOFactory {
 	private static TicketDAO ticketDAO;
 	private static SistemaDAO sistemaDAO;
 	private static ComponenteDAO componenteDAO;
+	private static HistoricoStatusDAO histStatusDAO;
 	
 	public static UsuarioDAO getUsuarioDAO()
 	{
@@ -57,5 +58,11 @@ public class DAOFactory {
 			componenteDAO = new ComponenteDAO();
 		
 		return componenteDAO;
+	}
+	
+	public static HistoricoStatusDAO getHistoricoStatusDAO() {
+		if (histStatusDAO == null)
+			histStatusDAO = new HistoricoStatusDAO();
+		return histStatusDAO;
 	}
 }

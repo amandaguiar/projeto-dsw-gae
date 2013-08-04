@@ -71,12 +71,6 @@
 		  <required>true</required>
 		  <rtexprvalue>true</rtexprvalue>
 	  </attribute>
-	
-		<attribute>
-		  <name>statusantigo</name>
-		  <required>true</required>
-		  <rtexprvalue>true</rtexprvalue>
-	  </attribute>
 	  <attribute>
 		  <name>tipoUsuario</name>
 		  <required>true</required>

@@ -53,6 +53,8 @@ public class ActionTicket extends Action{
 		ticket.setDescricao(getParameter("descricao", ""));
 		ticket.setSistema(getParameter("sistema", ""));
 		ticket.setComponente(getParameter("componente", ""));
+		ticket.setComentario(getParameter("comentario", ""));
+		
 		if(!ticket.getComponente().isEmpty())
 			ticket.setEmailOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
 		
@@ -64,20 +66,22 @@ public class ActionTicket extends Action{
 			ticket.setId_usuario(usuario.getId());
 			ticket.setIdentificador(String.valueOf(UUID.randomUUID()));
 		}
-		else if(novoStatus != null){
+		else if (novoStatus != null) {
 			ticket.setStatusAtual(novoStatus);
 		}
 		
 		// Verifica as regras de negócio
 		checkNonEmpty(ticket.getTitulo(), "O titulo do ticket não pode ser vazio.");
 		checkLength(ticket.getTitulo(), 80, "O nome do usuário.");
-
-		checkNonEmpty(ticket.getSistema(), "O sistema não pode ser vazio.");
-		
+		checkNonEmpty(ticket.getSistema(), "O sistema não pode ser vazio.");		
 		checkNonEmpty(ticket.getComponente(), "O componente não pode ser vazio.");		
 
-		// Salva os dados do usuário
+		// Salva os dados do ticket
 		DAOFactory.getTicketDAO().put(ticket);
+		
+		//Salva os dados de status do ticket		
+		DAOFactory.getHistoricoStatusDAO().registraStatus(ticket.getId(), ticket.getStatusAtual(), ticket.getComentario());
+		
 		return addRedirectNotice("Ticket registrado com sucesso.");
 	}
 	
@@ -116,7 +120,7 @@ public class ActionTicket extends Action{
 		Usuario usuario = (Usuario) checkLogged();
 		int id = getIntParameter("id", -1);
 		Ticket ticket = DAOFactory.getTicketDAO().get(id);
-		check(ticket != null, "O ticketnão existe.");		
+		check(ticket != null, "O ticket não existe.");		
 		
 		setAttribute("item", ticket);
 		setAttribute("usuario", usuario);
@@ -124,30 +128,29 @@ public class ActionTicket extends Action{
 	}
 	
 	/**
-	 * Verifica quais status devem aparecer no form para o usuario
-	 * @param statusAntigo
+	 * Verifica quais status devem aparecer no form para o usuario	 
 	 * @param statusAtual
 	 * @param tipoUsuario
 	 * @param statusTicket
 	 */
-	public static void verificaRegrasStatus(String statusAntigo, String statusAtual, String tipoUsuario, List<String> statusTicket){
+	public static void verificaRegrasStatus(String statusAtual, String tipoUsuario, List<String> statusTicket){
 		
 		if( (tipoUsuario.equalsIgnoreCase(TipoUsuario.OPERADOR.getNome())) && 
-		    (statusAtual.equalsIgnoreCase(StatusTicket.NOVO.getCodigo()) || statusAtual.equalsIgnoreCase(StatusTicket.REABERTO.getCodigo())) ){
-			statusTicket.add(StatusTicket.RESOLVIDO.getCodigo());
-			statusTicket.add(StatusTicket.INVALIDADO.getCodigo());
+		    (statusAtual.equalsIgnoreCase(StatusTicket.NOVO.toString()) || statusAtual.equalsIgnoreCase(StatusTicket.REABERTO.toString())) ){
+			statusTicket.add(StatusTicket.RESOLVIDO.toString());
+			statusTicket.add(StatusTicket.INVALIDADO.toString());
 		}
 		else if( (tipoUsuario.equalsIgnoreCase(TipoUsuario.USUARIO_FINAL.getNome())) &&
-				(statusAtual.equalsIgnoreCase(StatusTicket.RESOLVIDO.getCodigo()) || statusAtual.equalsIgnoreCase(StatusTicket.INVALIDADO.getCodigo())) ){
-			statusTicket.add(StatusTicket.REABERTO.getCodigo());
-			statusTicket.add(StatusTicket.FECHADO.getCodigo());
+				(statusAtual.equalsIgnoreCase(StatusTicket.RESOLVIDO.toString()) || statusAtual.equalsIgnoreCase(StatusTicket.INVALIDADO.toString())) ){
+			statusTicket.add(StatusTicket.REABERTO.toString());
+			statusTicket.add(StatusTicket.FECHADO.toString());
 		}
 		else if(tipoUsuario.equalsIgnoreCase(TipoUsuario.ADMINISTRADOR.getNome())){
-			statusTicket.add(StatusTicket.NOVO.getCodigo());
-			statusTicket.add(StatusTicket.RESOLVIDO.getCodigo());
-			statusTicket.add(StatusTicket.INVALIDADO.getCodigo());
-			statusTicket.add(StatusTicket.REABERTO.getCodigo());
-			statusTicket.add(StatusTicket.FECHADO.getCodigo());
+			statusTicket.add(StatusTicket.NOVO.toString());
+			statusTicket.add(StatusTicket.RESOLVIDO.toString());
+			statusTicket.add(StatusTicket.INVALIDADO.toString());
+			statusTicket.add(StatusTicket.REABERTO.toString());
+			statusTicket.add(StatusTicket.FECHADO.toString());
 		}
 		
 		

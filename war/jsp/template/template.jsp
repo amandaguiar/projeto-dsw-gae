@@ -120,10 +120,10 @@
 					<h3>Login</h3>
 					<form action="/login/login.do" method="post">
 						<label for="email">E-mail:</label>
-						<input type="text" name="email" id="emailLoginField" class="span" />
+						<input type="text" name="email" id="emailLoginField" class="span" placeholder="E-mail" />
 						
 						<label for="pwd">Senha:</label>
-						<input type="password" name="pwd" class="span" /><br />
+						<input type="password" name="pwd" class="span" placeholder="Senha" /><br />
 						<input type="submit" name="Submit" value="Login" class="btn btn-primary">
 					</form>
 					<ul>
@@ -143,7 +143,6 @@
 			</div>
 			
 			<div class="row-fluid" id="pnCentral">
-							
 			</div>
 		</div>
 	</div>

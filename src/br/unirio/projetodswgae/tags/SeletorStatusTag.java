@@ -18,8 +18,7 @@ public class SeletorStatusTag extends TagSupport
 
 	private String id;
 	private String idTicket;
-	private String valor;
-	private String statusAntigo;
+	private String valor;	
 	private String tipoUsuario;
 	private String classe;
 	private String estilo;
@@ -47,11 +46,6 @@ public class SeletorStatusTag extends TagSupport
 		this.valor = valor;
 	}
 	
-	public void setStatusantigo(String statusAntigo)
-	{
-		this.statusAntigo = statusAntigo;
-	}
-
 	public void setTipoUsuario(String tipoUsuario)
 	{
 		this.tipoUsuario = tipoUsuario;
@@ -66,8 +60,6 @@ public class SeletorStatusTag extends TagSupport
 	{
 		this.estilo = estilo;
 	}
-
-	
 	
 	@Override
 	public int doStartTag() throws JspException
@@ -76,7 +68,8 @@ public class SeletorStatusTag extends TagSupport
 		
 		try
 		{
-			if(idTicket.equals("-1")){
+			if (idTicket.equals("-1")) {
+				
 				out.write("<select disabled " + StringEscapeUtils.escapeHtml4(id) + "' size='1' id='" + StringEscapeUtils.escapeHtml4(id) + "'");
 				out.write(">\n");
 				String codigo = "";
@@ -85,7 +78,8 @@ public class SeletorStatusTag extends TagSupport
 				out.write("</select>\n");
 			}
 			/* Verifica se o usuario escolheu editar um ticket existente */
-			else{
+			else {
+				
 				out.write("<select name='" + StringEscapeUtils.escapeHtml4(id) + "' size='1' id='" + StringEscapeUtils.escapeHtml4(id) + "'");
 
 				if (estilo.length() > 0)
@@ -96,17 +90,16 @@ public class SeletorStatusTag extends TagSupport
 	
 				out.write(">\n");
 				List<String> statusTickets = new ArrayList<String>();
-				ActionTicket.verificaRegrasStatus(statusAntigo, valor, tipoUsuario, statusTickets);
+				ActionTicket.verificaRegrasStatus(valor, tipoUsuario, statusTickets);
 				
-				for (String codigo : statusTickets)
-				{
+				for (String codigo : statusTickets) {
+					
 					String selecionado = (valor.compareToIgnoreCase(codigo) == 0) ? " SELECTED" : "";
 					out.write("<option value='" + codigo + "'" + selecionado + ">" + StringEscapeUtils.escapeHtml4(codigo) + "</option>\n");
 				}
 				out.write("</select>\n");
 			}
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			throw new JspException(e.getMessage());
 		}
 
