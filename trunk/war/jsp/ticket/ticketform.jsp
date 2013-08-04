@@ -8,10 +8,11 @@ td { width: 350px; }
 
 <div id="content">
 	<c:set var="ticket" value="${requestScope.item}" scope="page" />
+	<c:set var="usuario" value="${requestScope.usuario}" scope="page" />
 	
-	<h3>Criação de Ticket</h3>
+	<h3>Formulário de Ticket</h3>
 	
-	<p>Entre com os dados do novo ticket no formulário abaixo:</p>
+	<p>Entre com os dados do ticket no formulário abaixo:</p>
 	
 	<form action="/ticket/salvaTicket.do" method="post">
 		<input type="hidden" name="id" value="${ticket.id}"/>
@@ -33,6 +34,11 @@ td { width: 350px; }
 		</td><td>
 			<label for="componente">Componente:</label>
 			<select name="componente" id="componente"><option value="-1">Selecione o componente ...</option></select><br>
+		</td></tr>
+		
+		<tr><td colspan="2">
+			<label for="status">Status:</label>
+			<pdsw:seletorStatus id="statusAtual" idticket="${ticket.id} "tipoUsuario="${usuario.tipoUsuario}" value="${ticket.statusAtual}" statusantigo="${ticket.statusAntigo}"/><br>
 		</td></tr>
 		</table>		
 

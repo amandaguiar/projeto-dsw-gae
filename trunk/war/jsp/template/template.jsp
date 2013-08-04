@@ -79,7 +79,7 @@
 					
 						<mvc:checkUserLevel level="final">
 						<li class="nav-header">Tickets</li>
-						<li><a href="/ticket/listaTickets.do">Meus tickets</a></li>						
+						<li><a href="/ticket/listaTickets.do">Meus tickets</a></li>
 						<li><a href="/ticket/novoTicket.do">Novo ticket</a></li>
 						<li class="nav-header">Perfil</li>
 						<li><a href="/usuario/preparaEdicaoDadosUsuario.do">Editar perfil</a></li>												
@@ -90,7 +90,7 @@
 						
 						<mvc:checkUserLevel level="operador">
 						<li class="nav-header">Tickets</li>
-						<li><a href="#">Meus tickets</a></li>
+						<li><a href="/ticket/listaTickets.do">Meus tickets</a></li>
 						<li class="nav-header">Perfil</li>
 						<li><a href="/usuario/preparaEdicaoDadosUsuario.do">Editar perfil</a></li>												
 						<li><a href="/login/preparaTrocaSenha.do">Trocar senha</a></li>

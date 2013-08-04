@@ -48,4 +48,51 @@
 		  <rtexprvalue>true</rtexprvalue>
 	  </attribute>
 	</tag>
+	
+	<tag>
+	  <name>seletorStatus</name>
+	  <tagclass>br.unirio.projetodswgae.tags.SeletorStatusTag</tagclass>
+	  <bodycontent>empty</bodycontent>
+	
+	  <attribute>
+		  <name>id</name>
+		  <required>true</required>
+		  <rtexprvalue>true</rtexprvalue>
+	  </attribute>
+	  	  
+	  <attribute>
+		  <name>idticket</name>
+		  <required>true</required>
+		  <rtexprvalue>true</rtexprvalue>
+	  </attribute>
+	  
+	  <attribute>
+		  <name>value</name>
+		  <required>true</required>
+		  <rtexprvalue>true</rtexprvalue>
+	  </attribute>
+	
+		<attribute>
+		  <name>statusantigo</name>
+		  <required>true</required>
+		  <rtexprvalue>true</rtexprvalue>
+	  </attribute>
+	  <attribute>
+		  <name>tipoUsuario</name>
+		  <required>true</required>
+		  <rtexprvalue>true</rtexprvalue>
+	  </attribute>
+	
+	  <attribute>
+		  <name>classe</name>
+		  <required>false</required>
+		  <rtexprvalue>true</rtexprvalue>
+	  </attribute>
+	
+	  <attribute>
+		  <name>style</name>
+		  <required>false</required>
+		  <rtexprvalue>true</rtexprvalue>
+	  </attribute>
+	</tag>
 </taglib>
