@@ -65,7 +65,7 @@ public class SeletorSistemaTag extends TagSupport
 	public int doStartTag() throws JspException
 	{
 		JspWriter out = pageContext.getOut();
-
+		
 		try
 		{
 			String identificador = (id.length() > 0) ? id : nome;

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import br.unirio.projetodswgae.dao.DAOFactory;
+import br.unirio.projetodswgae.model.StatusTicket;
 import br.unirio.projetodswgae.model.Ticket;
 import br.unirio.projetodswgae.model.Usuario;
 import br.unirio.simplemvc.actions.Action;
@@ -22,7 +23,7 @@ public class ActionTicket extends Action{
 	 * Ação para a criação de um novo ticket
 	 */
 	@Any("/jsp/ticket/ticketform.jsp")
-	public String novoTicket()
+	public String novoTicket() throws ActionException
 	{
 		Ticket ticket = new Ticket();
 		setAttribute("item", ticket);
@@ -47,16 +48,24 @@ public class ActionTicket extends Action{
 		setAttribute("item", ticket);
 
 		// Captura os dados do formulário
-		ticket.setId_usuario(usuario.getId());
 		ticket.setTitulo(getParameter("titulo", ""));
 		ticket.setDescricao(getParameter("descricao", ""));
 		ticket.setSistema(getParameter("sistema", ""));
 		ticket.setComponente(getParameter("componente", ""));
-		ticket.setOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
+		ticket.setEmailOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
 		
+		StatusTicket statusAtual = ticket.getStatus();
+		StatusTicket novoStatus = null;
+		
+		/* verifica se é um ticket novo, senão é uma edição de ticket */
 		if (ticket.getId() <= 0)
 		{
+			ticket.setId_usuario(usuario.getId());
 			ticket.setIdentificador(String.valueOf(UUID.randomUUID()));
+		}
+		else{
+			novoStatus = StatusTicket.get(getParameter("statusAtual", ""));
+			ticket.setStatusAtual(novoStatus);
 		}
 		
 		// Verifica as regras de negócio
@@ -65,7 +74,7 @@ public class ActionTicket extends Action{
 
 		checkNonEmpty(ticket.getSistema(), "O sistema não pode ser vazio.");
 		
-		checkNonEmpty(ticket.getComponente(), "O componente não pode ser vazio.");
+		checkNonEmpty(ticket.getComponente(), "O componente não pode ser vazio.");		
 
 		// Salva os dados do usuário
 		DAOFactory.getTicketDAO().put(ticket);
@@ -83,7 +92,7 @@ public class ActionTicket extends Action{
 		int page = getIntParameter("page", 0);
 		int start = (PAGE_SIZE * page);
 		
-		List<Ticket> tickets = DAOFactory.getTicketDAO().getTicketsUsuario(usuario.getId(), start, PAGE_SIZE);
+		List<Ticket> tickets = DAOFactory.getTicketDAO().getTicketsUsuario(usuario, start, PAGE_SIZE);
 		
 		int count = DAOFactory.getTicketDAO().conta(usuario.getId());
 		
@@ -104,12 +113,23 @@ public class ActionTicket extends Action{
 	@Success("/jsp/ticket/ticketform.jsp")
 	public String editaTicket() throws ActionException
 	{
+		Usuario usuario = (Usuario) checkLogged();
 		int id = getIntParameter("id", -1);
 		Ticket ticket = DAOFactory.getTicketDAO().get(id);
 		check(ticket != null, "O ticketnão existe.");		
 		
 		setAttribute("item", ticket);
+		setAttribute("usuario", usuario);
 		return SUCCESS;
 	}
 	
+	public void verificaStatus(String idTicket, String statusAntigo, String statusAtual, String tipoUsuario){
+		if(idTicket.equals("-1") -> Novo
+		
+		Novo OU Reaberto -> Resolvido OU Invalidado
+		
+		Resolvido OU Invalidado -> Reaberto OU Fechado
+		
+		
+	}
 }
