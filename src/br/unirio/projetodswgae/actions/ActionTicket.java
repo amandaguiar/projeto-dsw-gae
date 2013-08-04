@@ -54,7 +54,7 @@ public class ActionTicket extends Action{
 		ticket.setComponente(getParameter("componente", ""));
 		ticket.setEmailOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
 		
-		StatusTicket statusAtual = ticket.getStatus();
+		StatusTicket statusAtual = ticket.getStatusAtual();
 		StatusTicket novoStatus = null;
 		
 		/* verifica se é um ticket novo, senão é uma edição de ticket */
@@ -123,7 +123,7 @@ public class ActionTicket extends Action{
 		return SUCCESS;
 	}
 	
-	public void verificaStatus(String idTicket, String statusAntigo, String statusAtual, String tipoUsuario){
+	/*public void verificaStatus(String idTicket, String statusAntigo, String statusAtual, String tipoUsuario, Status){
 		if(idTicket.equals("-1") -> Novo
 		
 		Novo OU Reaberto -> Resolvido OU Invalidado
@@ -131,5 +131,5 @@ public class ActionTicket extends Action{
 		Resolvido OU Invalidado -> Reaberto OU Fechado
 		
 		
-	}
+	}*/
 }

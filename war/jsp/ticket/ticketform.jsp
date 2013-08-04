@@ -38,7 +38,7 @@ td { width: 350px; }
 		
 		<tr><td colspan="2">
 			<label for="status">Status:</label>
-			<pdsw:seletorStatus id="statusAtual" idticket="${ticket.id} "tipoUsuario="${usuario.tipoUsuario}" value="${ticket.statusAtual}" statusantigo="${ticket.statusAntigo}"/><br>
+			<pdsw:seletorStatus readonly id="statusAtual" idticket="${ticket.id}" tipoUsuario="${usuario.tipoUsuario}" value="${ticket.statusAtual}" statusantigo="${ticket.statusAntigo}"/><br>
 		</td></tr>
 		</table>		
 
