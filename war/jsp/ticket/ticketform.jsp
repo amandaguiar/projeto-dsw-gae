@@ -38,9 +38,14 @@ td { width: 350px; }
 		
 		<tr><td colspan="2">
 			<label for="status">Status:</label>
+			<input id="statusAtual" type="text" name="statusAtual" value="${ticket.statusAtual}" disabled/><br>
+		</td></tr>
+		
+		<tr><td colspan="2">
+			<label for="status">Novo Status:</label>
 			<pdsw:seletorStatus id="statusAtual" idticket="${ticket.id}" tipoUsuario="${usuario.tipoUsuario}" value="${ticket.statusAtual}" statusantigo="${ticket.statusAntigo}"/><br>
 		</td></tr>
-		</table>		
+		</table>
 
 		<input type="submit" name="btSubmit" value="Enviar Dados" class="btn btn-primary"/><br>
 	</form>	

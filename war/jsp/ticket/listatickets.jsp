@@ -28,7 +28,7 @@
 					<c:out value="${item.componente}"/>
 				</td>
 				<td>
-					<c:out value="${item.status}"/>
+					<c:out value="${item.statusAtual}"/>
 				</td>
 				<td>
 					<a href='/ticket/editaTicket.do?id=${item.id}'><i class="icon-pencil"></i></a>					

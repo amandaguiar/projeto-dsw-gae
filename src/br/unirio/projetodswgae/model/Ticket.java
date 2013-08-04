@@ -22,7 +22,7 @@ public class Ticket implements DataObject{
 		this.sistema = "";
 		this.componente = "";
 		this.descricao = "";
-		this.statusAntigo = null;
+		this.statusAntigo = StatusTicket.NOVO;
 		this.statusAtual = StatusTicket.NOVO;
 		this.emailOperadorResponsavel = "";
 	}
