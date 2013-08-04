@@ -84,7 +84,7 @@ public class ActionTicket extends Action{
 		
 		return addRedirectNotice("Ticket registrado com sucesso.");
 	}
-	
+		
 	/**
 	 * Ação para listar tickets de um usuário
 	 */
