@@ -24,9 +24,9 @@ td { width: 350px; }
 			<tr>
 			<td colspan="2">
 				<label for="descricao">Descricao:</label>
-				<textarea name="descricao" id="descricao" rows="3">${ticket.descricao}</textarea><br>
+				<textarea name="descricao" id="descricao" rows="3" style="width:85%">${ticket.descricao}</textarea><br>
 			</td>
-			</tr>				
+			</tr>			
 			<tr>
 			<td>		
 				<label for="sistema">Sistema:</label>
@@ -37,11 +37,15 @@ td { width: 350px; }
 				<select name="componente" id="componente"><option value="-1">Selecione o componente ...</option></select><br>
 			</td>
 			</tr>
+		
+		</table>
+		<c:if test="${ticket.id != -1}">	
+		<table>
 			<tr>
 			<td colspan="2">
 				<hr class="divider" style="width:90%">
 			</td>
-			</tr>								
+			</tr>							
 			<tr>
 			<td>
 				<label for="status">Status Atual:</label>
@@ -53,12 +57,13 @@ td { width: 350px; }
 			</td>			
 			</tr>
 			<tr>
-			<td>
+			<td colspan="2">
 				<label for="comentario">Comentário:</label>
-				<textarea rows="3" cols="2" name="comentario" id="comentario">${ticket.comentario}</textarea>
+				<textarea rows="3" cols="2" style="width:85%" name="comentario" id="comentario">${ticket.comentario}</textarea>
 			</td>
 			</tr>
 		</table>
+		</c:if>
 		<br>
 		<input type="submit" name="btSubmit" value="Enviar Dados" class="btn btn-primary"/><br>
 	</form>	
