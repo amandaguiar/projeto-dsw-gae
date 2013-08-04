@@ -110,5 +110,19 @@ public class ActionUsuario extends Action {
 		}
 		
 		return addRedirectNotice("E-mail enviado com sucesso.");
+	}	
+	
+	@SuccessRedirect("/usuario/listaUsuarios.do")
+	@Error("/jsp/usuario/listausuario.jsp")
+	public String promoverOperador() throws ActionException {
+		
+		String email = getParameter("email", "");
+		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioEmail(email);
+		
+		usuario.setTipoUsuario(TipoUsuario.OPERADOR);
+		
+		DAOFactory.getUsuarioDAO().put(usuario);
+		
+		return addRedirectNotice("O usuario de e-mail " + email + " foi promovido a operador com sucesso.");
 	}
 }
