@@ -79,6 +79,7 @@ public class SeletorStatusTag extends TagSupport
 		{
 			if(idTicket.equals("-1")){
 				out.write("<select disabled name='" + StringEscapeUtils.escapeHtml4(id) + "' size='1' id='" + StringEscapeUtils.escapeHtml4(id) + "'");
+				out.write(">\n");
 				String codigo = StatusTicket.NOVO.getCodigo();
 				String selecionado = " SELECTED";
 				out.write("<option value='" + codigo + "'" + selecionado + ">" + StringEscapeUtils.escapeHtml4(codigo) + "</option>\n");
