@@ -3,7 +3,7 @@
 
 <div id="content">
 	<h3>Sistemas</h3>	
-	<a class="btn btn-success" href="/sistema/novoSistema.do">Cadastrar novo sistema</a>
+	<a class="btn btn-success" href="/sistema/novoSistema.do"><i class="icon-plus icon-white"></i></a>
 	<br><br>
 	<table class="table table-bordered table-hover">
 		<tr>

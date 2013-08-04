@@ -27,7 +27,7 @@
 				</td>
 				<td>
 				<c:if test="${item.tipoUsuario == 'USUARIO_FINAL'}">				
-					<a class="btn btn-small btn-warning" href="#">Promover a operador</a>				
+					<a class="btn btn-small btn-warning" href="/usuario/promoverOperador.do?email=${item.email}">Promover a operador</a>				
 				</c:if>
 				</td>
 			</tr>
