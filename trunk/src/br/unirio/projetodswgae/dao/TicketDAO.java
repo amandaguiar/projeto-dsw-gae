@@ -50,15 +50,27 @@ public class TicketDAO extends AbstractDAO<Ticket> {
 	/**
 	 * Retorna uma lista de tickets de um usuário
 	 */
-	public List<Ticket> getTicketsUsuario(Usuario usuario, int start, int page_size){
+	public List<Ticket> getTicketsUsuario(Usuario usuario, String filtro, int start, int page_size){
+		
 		if(usuario.getTipoUsuario().getCodigo().equals(TipoUsuario.USUARIO_FINAL.getCodigo())){
-			return list(start, page_size, exactFilter("id_usuario", FilterOperator.EQUAL, usuario.getId()));
+			if (filtro.equals(""))
+				return list(start, page_size, exactFilter("id_usuario", FilterOperator.EQUAL, usuario.getId()));
+			else
+				return list(start, page_size, and(exactFilter("id_usuario", FilterOperator.EQUAL, usuario.getId()), 
+					or(exactFilter("titulo", FilterOperator.EQUAL, filtro), exactFilter("sistema", FilterOperator.EQUAL, filtro))));
 		}
-		else if(usuario.getTipoUsuario().getCodigo().equals(TipoUsuario.OPERADOR.getCodigo())){
-			return list(start, page_size, exactFilter("emailOperadorResponsavel", FilterOperator.EQUAL, usuario.getEmail()));
+		else if(usuario.getTipoUsuario().getCodigo().equals(TipoUsuario.OPERADOR.getCodigo())) {
+			if (filtro.equals(""))
+				return list(start, page_size, exactFilter("emailOperadorResponsavel", FilterOperator.EQUAL, usuario.getEmail()));
+			else
+				return list(start, page_size, and(exactFilter("emailOperadorResponsavel", FilterOperator.EQUAL, usuario.getEmail()),
+					or(exactFilter("titulo", FilterOperator.EQUAL, filtro), exactFilter("sistema", FilterOperator.EQUAL, filtro))));
 		}
-		else{
-			return list(start, page_size);
+		else {
+			if (filtro.equals(""))
+				return list(start, page_size);
+			else
+				return list(start, page_size, or(exactFilter("titulo", FilterOperator.EQUAL, filtro), exactFilter("sistema", FilterOperator.EQUAL, filtro)));
 		}
 	}
 	

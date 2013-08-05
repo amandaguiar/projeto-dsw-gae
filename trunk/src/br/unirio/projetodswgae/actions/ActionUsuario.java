@@ -10,6 +10,7 @@ import br.unirio.projetodswgae.services.GerenciadorEmail;
 import br.unirio.simplemvc.actions.Action;
 import br.unirio.simplemvc.actions.ActionException;
 import br.unirio.simplemvc.actions.authentication.DisableUserVerification;
+import br.unirio.simplemvc.actions.results.Any;
 import br.unirio.simplemvc.actions.results.Error;
 import br.unirio.simplemvc.actions.results.Success;
 import br.unirio.simplemvc.actions.results.SuccessRedirect;
@@ -40,9 +41,6 @@ public class ActionUsuario extends Action {
 	{
 		Usuario usuario = (Usuario) checkLogged();
 
-		// Captura ou cria o usuário
-		//Usuario usuario = (id == -1) ? new Usuario() : DAOFactory.getUsuarioDAO().get(id);
-
 		// Disponibiliza os dados para o caso de erros
 		setAttribute("item", usuario);
 
@@ -65,24 +63,27 @@ public class ActionUsuario extends Action {
 	/**
 	 * Ação para listar usuários 
 	 */
-
-	//TODO verificar se é administrador
 	@Success("/jsp/usuario/listausuario.jsp")
 	@Error("/login/login.do")
 	public String listaUsuarios() throws ActionException{		
 		
 		checkUserLevel(TipoUsuario.ADMINISTRADOR.getCodigo().toString());
 		
+		String filtro = getAttribute("filtro") != null ? getAttribute("filtro").toString() : "";	
+		
 		int page = getIntParameter("page", 0);
 		int start = (PAGE_SIZE * page);
 		
-		List<Usuario> usuarios = DAOFactory.getUsuarioDAO().getUsuarios(start, PAGE_SIZE);
+		List<Usuario> usuarios = DAOFactory.getUsuarioDAO().getUsuarios(filtro, start, PAGE_SIZE);
 		int count = DAOFactory.getUsuarioDAO().conta();
 		
 		boolean hasNext = (count > (page+1) * PAGE_SIZE);
 		boolean hasPrior = (page > 0);
+		boolean hasItem = usuarios.size() > 0 ? true : false;
 		
 		setAttribute("item", usuarios);
+		setAttribute("hasItem", hasItem);
+		setAttribute("noItem", !hasItem);
 		setAttribute("page", page);
 		setAttribute("hasNextPage", hasNext);
 		setAttribute("hasPriorPage", hasPrior);
@@ -92,6 +93,9 @@ public class ActionUsuario extends Action {
 		return SUCCESS;
 	}
 	
+	/**
+	 * Ação executada quando um usuário final solicita ser operador
+	 */
 	@SuccessRedirect("/usuario/preparaEdicaoDadosUsuario.do")
 	@Error("/jsp/usuario/usuarioform.jsp")
 	public String solicitaSerOperador() throws ActionException {
@@ -112,6 +116,9 @@ public class ActionUsuario extends Action {
 		return addRedirectNotice("E-mail enviado com sucesso.");
 	}	
 	
+	/**
+	 * Ação executada quando um administrador transforma um usuário final em operador 
+	 */
 	@SuccessRedirect("/usuario/listaUsuarios.do")
 	@Error("/jsp/usuario/listausuario.jsp")
 	public String promoverOperador() throws ActionException {
@@ -124,5 +131,16 @@ public class ActionUsuario extends Action {
 		DAOFactory.getUsuarioDAO().put(usuario);
 		
 		return addRedirectNotice("O usuario de e-mail " + email + " foi promovido a operador com sucesso.");
+	}
+	
+	/**
+	 * Ação para filtrar usuários 
+	 */
+	@Any("/usuario/listaUsuarios.do")
+	public String filtraUsuario() throws ActionException {
+		
+		String filtro = getParameter("filtro", "");
+		setAttribute("filtro", filtro);
+		return SUCCESS;		
 	}
 }

@@ -15,6 +15,7 @@ import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 public class ComponenteDAO extends AbstractDAO<Componente>{
 
@@ -67,12 +68,15 @@ public class ComponenteDAO extends AbstractDAO<Componente>{
 		
 		return (String) result.getProperty("emailOperadorResponsavel");
 	}
-		
+	
+	/**
+	 * Retorna todos os componentes filtrando por sistema
+	 */
 	public List<Componente> getComponentes(String sistema, int start, int page_size){
 		if (sistema.isEmpty()) {
-			return list(start, page_size);			
+			return list(start, page_size, "nome", SortDirection.ASCENDING);			
 		}
-		return list(start, page_size, exactFilter("sistema", FilterOperator.EQUAL, sistema));		
+		return list(start, page_size, exactFilter("sistema", FilterOperator.EQUAL, sistema), "nome", SortDirection.ASCENDING);		
 	}
 	
 	/**

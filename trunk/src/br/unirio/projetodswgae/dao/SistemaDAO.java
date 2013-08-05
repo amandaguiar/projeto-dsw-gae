@@ -6,6 +6,8 @@ import br.unirio.projetodswgae.model.Sistema;
 import br.unirio.simplemvc.gae.datastore.AbstractDAO;
 
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 public class SistemaDAO extends AbstractDAO<Sistema>  {
 
@@ -38,8 +40,11 @@ public class SistemaDAO extends AbstractDAO<Sistema>  {
 	 * Retorna os sistemas cadastrados
 	 */
 	
-	public List<Sistema> getSistemas(int start, int page_size){
-		return list(start, page_size);
+	public List<Sistema> getSistemas(String filtro, int start, int page_size){
+		if (filtro.equals(""))
+			return list(start, page_size, "nome", SortDirection.ASCENDING);
+		else
+			return list(start, page_size, exactFilter("nome", FilterOperator.EQUAL, filtro));
 	}
 
 	/**

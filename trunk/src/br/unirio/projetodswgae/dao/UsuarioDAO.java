@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Query.FilterOperator;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 import br.unirio.projetodswgae.model.TipoUsuario;
 import br.unirio.projetodswgae.model.Usuario;
@@ -54,8 +55,11 @@ public class UsuarioDAO extends AbstractDAO<Usuario>{
 	 * Retorna os usuarios cadastrados
 	 */
 	
-	public List<Usuario> getUsuarios(int start, int page_size){
-		return list(start, page_size);
+	public List<Usuario> getUsuarios(String filtro, int start, int page_size){
+		if (filtro.equals(""))
+			return list(start, page_size, "nome", SortDirection.ASCENDING);
+		else
+			return list(start, page_size, exactFilter("nome", FilterOperator.EQUAL, filtro), "nome", SortDirection.ASCENDING);
 	}
 
 	/**
@@ -65,6 +69,9 @@ public class UsuarioDAO extends AbstractDAO<Usuario>{
 		return count();
 	}
 	
+	/**
+	 * Retorna todos os administradores cadastrados
+	 */
 	public List<Usuario> getAdministradores() {		
 		return list(exactFilter("tipoUsuario", FilterOperator.EQUAL, TipoUsuario.ADMINISTRADOR.getCodigo().toString()));
 	}

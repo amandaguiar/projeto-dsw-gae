@@ -109,15 +109,19 @@ public class ActionTicket extends Action{
 		
 		int page = getIntParameter("page", 0);
 		int start = (PAGE_SIZE * page);
+		String filtro = getAttribute("filtro") != null ? getAttribute("filtro").toString() : "";
 		
-		List<Ticket> tickets = DAOFactory.getTicketDAO().getTicketsUsuario(usuario, start, PAGE_SIZE);
+		List<Ticket> tickets = DAOFactory.getTicketDAO().getTicketsUsuario(usuario, filtro, start, PAGE_SIZE);
 		
 		int count = DAOFactory.getTicketDAO().conta(usuario.getId());
 		
 		boolean hasNext = (count > (page+1) * PAGE_SIZE);
 		boolean hasPrior = (page > 0);
+		boolean hasItem = tickets.size() > 0 ? true : false;
 				
 		setAttribute("page", page);
+		setAttribute("hasItem", hasItem);
+		setAttribute("noItem", !hasItem);
 		setAttribute("hasNextPage", hasNext);
 		setAttribute("hasPriorPage", hasPrior);
 		setAttribute("noPriorPage", !hasPrior);
@@ -128,9 +132,7 @@ public class ActionTicket extends Action{
 	}
 	
 	/**
-	 * Ação para editar um ticket 
-	 * @return
-	 * @throws ActionException
+	 * Ação para editar um ticket
 	 */
 	@ErrorRedirect("/ticket/listaTickets.do")
 	@Success("/jsp/ticket/ticketform.jsp")
@@ -167,9 +169,6 @@ public class ActionTicket extends Action{
 	
 	/**
 	 * Verifica quais status devem aparecer no form para o usuario	 
-	 * @param statusAtual
-	 * @param tipoUsuario
-	 * @param statusTicket
 	 */
 	public static void verificaRegrasStatus(String statusAtual, String tipoUsuario, List<String> statusTicket){
 		statusTicket.add(statusAtual);
@@ -190,7 +189,16 @@ public class ActionTicket extends Action{
 			statusTicket.add(StatusTicket.REABERTO.toString());
 			statusTicket.add(StatusTicket.FECHADO.toString());
 		}
+	}
+	
+	/**
+	 * Ação para filtrar tickets
+	 */
+	@Any("/ticket/listaTickets.do")
+	public String filtraTicket() throws ActionException {
 		
-		
+		String filtro = getParameter("filtro", "");
+		setAttribute("filtro", filtro);
+		return SUCCESS;		
 	}
 }
