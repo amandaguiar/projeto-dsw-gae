@@ -1,12 +1,14 @@
 package br.unirio.projetodswgae.dao;
 
-import java.util.Date;
+import java.util.List;
+
+import br.unirio.projetodswgae.model.HistoricoStatus;
+import br.unirio.projetodswgae.model.StatusTicket;
+import br.unirio.projetodswgae.model.Ticket;
+import br.unirio.simplemvc.gae.datastore.AbstractDAO;
 
 import com.google.appengine.api.datastore.Entity;
-
-import br.unirio.projetodswgae.model.StatusTicket;
-import br.unirio.simplemvc.gae.datastore.AbstractDAO;
-import br.unirio.simplemvc.gae.datastore.DataObject;
+import com.google.appengine.api.datastore.Query.FilterOperator;
 
 public class HistoricoStatusDAO extends AbstractDAO<HistoricoStatus>{
 
@@ -37,69 +39,21 @@ public class HistoricoStatusDAO extends AbstractDAO<HistoricoStatus>{
 		this.put(new HistoricoStatus(-1, idTicket, status, comentario));
 	}
 	
-	
-}
-
-class HistoricoStatus implements DataObject {
-	
-	private int id;
-	private int idTicket;
-	private Date dataRegistro;
-	private StatusTicket status;
-	private String comentario;
-	
-	public HistoricoStatus(int id, int idTicket, StatusTicket status, String comentario) {
-		this.id = -1;
-		this.idTicket = idTicket;
-		this.dataRegistro = new Date();
-		this.status = status;
-		this.comentario = comentario;
+	/**
+	 * Retorna uma lista de comentarios de um ticket
+	 * @param ticket
+	 * @param start
+	 * @param page_size
+	 * @return
+	 */
+	public List<HistoricoStatus> getComentariosTicket(Ticket ticket, int start, int page_size){
+		return list(start, page_size, and(exactFilter("idTicket", FilterOperator.EQUAL, ticket.getId()),
+										  exactFilter("comentario", FilterOperator.NOT_EQUAL, "") ) );
 	}
 	
-	public HistoricoStatus() {
-		this(-1, -1, StatusTicket.NOVO, "");
-	}
-	
-	@Override
-	public int getId() {		
-		return this.id;
-	}
-	
-	@Override
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getIdTicket() {
-		return idTicket;
-	}
-
-	public void setIdTicket(int idTicket) {
-		this.idTicket = idTicket;
-	}
-
-	public Date getDataRegistro() {
-		return dataRegistro;
-	}
-
-	public void setDataRegistro(Date dataRegistro) {
-		this.dataRegistro = dataRegistro;
-	}
-
-	public StatusTicket getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusTicket status) {
-		this.status = status;
-	}
-	
-	public String getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
+	public int conta(int idTicket) {
+		return count(and(exactFilter("idTicket", FilterOperator.EQUAL, idTicket),
+				         exactFilter("comentario", FilterOperator.NOT_EQUAL, "") ) );
 	}
 	
 }	

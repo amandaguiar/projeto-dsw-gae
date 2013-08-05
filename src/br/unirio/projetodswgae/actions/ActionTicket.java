@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import br.unirio.projetodswgae.dao.DAOFactory;
+import br.unirio.projetodswgae.model.HistoricoStatus;
 import br.unirio.projetodswgae.model.StatusTicket;
 import br.unirio.projetodswgae.model.Ticket;
 import br.unirio.projetodswgae.model.TipoUsuario;
@@ -126,6 +127,11 @@ public class ActionTicket extends Action{
 		return SUCCESS;
 	}
 	
+	/**
+	 * Ação para editar um ticket 
+	 * @return
+	 * @throws ActionException
+	 */
 	@ErrorRedirect("/ticket/listaTickets.do")
 	@Success("/jsp/ticket/ticketform.jsp")
 	public String editaTicket() throws ActionException
@@ -135,8 +141,27 @@ public class ActionTicket extends Action{
 		Ticket ticket = DAOFactory.getTicketDAO().get(id);
 		check(ticket != null, "O ticket não existe.");		
 		
+		int page = getIntParameter("page", 0);
+		int start = (PAGE_SIZE * page);
+		
+		List<HistoricoStatus> historico = DAOFactory.getHistoricoStatusDAO().getComentariosTicket(ticket, start, PAGE_SIZE);
+		
+		int count = DAOFactory.getHistoricoStatusDAO().conta(ticket.getId());
+		
+		boolean hasNext = (count > (page+1) * PAGE_SIZE);
+		boolean hasPrior = (page > 0);
+				
+		setAttribute("page", page);
+		setAttribute("hasNextPage", hasNext);
+		setAttribute("hasPriorPage", hasPrior);
+		setAttribute("noPriorPage", !hasPrior);
+		setAttribute("noNextPage", !hasNext);
+		
+		
 		setAttribute("item", ticket);
 		setAttribute("usuario", usuario);
+		setAttribute("historico", historico);
+		setAttribute("qtdecomentarios", count);
 		return SUCCESS;
 	}
 	
