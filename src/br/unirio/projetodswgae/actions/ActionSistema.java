@@ -76,15 +76,19 @@ public class ActionSistema extends Action{
 		
 		int page = getIntParameter("page", 0);
 		int start = (PAGE_SIZE * page);
+		String filtro = getAttribute("filtro") != null ? getAttribute("filtro").toString() : "";
 		
-		List<Sistema> sistema = DAOFactory.getSistemaDAO().getSistemas(start, PAGE_SIZE);
+		List<Sistema> sistema = DAOFactory.getSistemaDAO().getSistemas(filtro, start, PAGE_SIZE);
 		int count = DAOFactory.getSistemaDAO().conta();
 		
 		boolean hasNext = (count > (page+1) * PAGE_SIZE);
 		boolean hasPrior = (page > 0);
+		boolean hasItem = sistema.size() > 0 ? true : false;
 		
 		setAttribute("item", sistema);
 		setAttribute("page", page);
+		setAttribute("hasItem", hasItem);
+		setAttribute("noItem", !hasItem);
 		setAttribute("hasNextPage", hasNext);
 		setAttribute("hasPriorPage", hasPrior);
 		setAttribute("noPriorPage", !hasPrior);
@@ -125,4 +129,15 @@ public class ActionSistema extends Action{
 		return SUCCESS;
 	}
 	
+	/**
+	 * Ação para filtrar sistemas 
+	 */
+	
+	@Any("/sistema/listaSistemas.do")
+	public String filtraSistema() throws ActionException {
+		
+		String filtro = getParameter("filtro", "");
+		setAttribute("filtro", filtro);
+		return SUCCESS;		
+	}
 }

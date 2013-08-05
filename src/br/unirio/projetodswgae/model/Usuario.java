@@ -1,5 +1,9 @@
 package br.unirio.projetodswgae.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import br.unirio.projetodswgae.dao.DAOFactory;
 import br.unirio.simplemvc.gae.datastore.DataObject;
 import br.unirio.simplemvc.servlets.IUser;
 
@@ -132,23 +136,26 @@ public class Usuario implements IUser, DataObject {
 	public boolean checkLevel(String nivel) {
 		return (tipoUsuario.getCodigo().compareToIgnoreCase(nivel) == 0);
 	}
-
-
-
 	@Override
 	public boolean isActive() {
 		return ativo;
 	}
-
-
-
 	@Override
 	public boolean mustChangePassword() {
 		return deveTrocarSenha;
 	}
 
-	
-	
-	
-	
+	public static String getPenultimoLogin(int id) {
+		if (id > 0) {
+			Date dataUltimoLogin = DAOFactory.getUsuarioLoginDAO().pegaDataPenultimoLogin(id);
+			if (dataUltimoLogin != null) {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				return sdf.format(dataUltimoLogin) + " hrs";
+			}
+			else
+				return "Nunca";
+			}
+		else
+			return "";
+	}
 }

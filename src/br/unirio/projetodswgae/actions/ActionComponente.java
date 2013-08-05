@@ -31,13 +31,12 @@ public class ActionComponente extends Action{
 
 	
 	/**
-	 * Ação de salvamento de novos componentes
+	 * Ação de salvar componentes
 	 */
 	@SuccessRedirect("/componente/listaComponentes.do")
 	@Error("/jsp/componente/componenteform.jsp")
 	public String salvaComponente() throws ActionException
-	{
-		
+	{	
 		// Pega o identificador do componente
 		int id = getIntParameter("id", -1);
 
@@ -65,13 +64,16 @@ public class ActionComponente extends Action{
 				break;
 			}
 		}
-		check(!componenteExistente, "O sistema escolhido possui um componente com este nome.");
+		
+		if (id == -1)
+			check(!componenteExistente, "O sistema escolhido possui um componente com este nome.");	
 		
 		checkNonEmpty(componente.getEmailOperadorResponsavel(), "O email do operador não pode ser vazio.");
 		checkEmail(componente.getEmailOperadorResponsavel(), "O e-mail do operador não está seguindo um formato válido.");
+		
 		Usuario usuario = DAOFactory.getUsuarioDAO().getUsuarioEmail(componente.getEmailOperadorResponsavel());
 		check(usuario != null, "E-mail do usuário não encontrado");
-		check(usuario.getTipoUsuario() == TipoUsuario.OPERADOR, "O usuario não é operador");
+		check(usuario.getTipoUsuario() == TipoUsuario.OPERADOR, "Este e-mail não é de um usuário operador.");
 		
 		DAOFactory.getComponenteDAO().put(componente);
 		return addRedirectNotice("Componente registrado com sucesso.");
@@ -86,6 +88,7 @@ public class ActionComponente extends Action{
 		
 		int page = getIntParameter("page", 0);
 		String sistema = getParameter("sistema", "");		
+		//String filtro = getAttribute("filtro") != null ? getAttribute("filtro").toString() : "";
 		
 		int start = (PAGE_SIZE * page);
 		
@@ -94,9 +97,12 @@ public class ActionComponente extends Action{
 		
 		boolean hasNext = (count > (page+1) * PAGE_SIZE);
 		boolean hasPrior = (page > 0);
+		boolean hasItem = componente.size() > 0 ? true : false;
 		
 		setAttribute("item", componente);
 		setAttribute("page", page);
+		setAttribute("hasItem", hasItem);
+		setAttribute("noItem", !hasItem);
 		setAttribute("hasNextPage", hasNext);
 		setAttribute("hasPriorPage", hasPrior);
 		setAttribute("noPriorPage", !hasPrior);
@@ -105,6 +111,9 @@ public class ActionComponente extends Action{
 		return SUCCESS;
 	}
 		
+	/**
+	 * Ação para editar componentes 
+	 */
 	@ErrorRedirect("/componente/listaComponentes.do")
 	@Success("/jsp/componente/componenteform.jsp")
 	public String editaComponente() throws ActionException
@@ -122,7 +131,9 @@ public class ActionComponente extends Action{
 	 */
 	@Any("/componente/listaComponentes.do")
 	public String removeComponente() throws ActionException{
+		
 		int id = getIntParameter("id", -1);
+		
 		Componente componente = DAOFactory.getComponenteDAO().get(id);
 		check(componente != null, "O componente não existe");
 		check(DAOFactory.getTicketDAO().getTicketsComponenteSistema(componente.getNome(), componente.getSistema()).size() == 0, 
@@ -132,5 +143,13 @@ public class ActionComponente extends Action{
 		addRedirectNotice("O componente selecionado foi removido com sucesso");
 		return SUCCESS;
 	}
+	
+//	@Any("/componente/listaComponentes.do")
+//	public String filtraComponente() throws ActionException {
+//		
+//		String filtro = getParameter("filtro", "");
+//		setAttribute("filtro", filtro);
+//		return SUCCESS;		
+//	}
 	
 }

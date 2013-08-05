@@ -5,6 +5,7 @@
 <%@taglib uri="/WEB-INF/simplemvc.tld" prefix="mvc"%>
 
 <%@ page import="br.unirio.simplemvc.servlets.AuthenticationService" %>
+<%@ page import="br.unirio.projetodswgae.model.Usuario" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 
@@ -31,7 +32,14 @@
 <body>
 
 <%
-	pageContext.setAttribute("usuarioLogado", AuthenticationService.getUser(request));
+	pageContext.setAttribute("usuarioLogado", AuthenticationService.getUser(request));	
+	//int id = 0;
+	//if (AuthenticationService.getUser(request) != null) {
+	//	id = AuthenticationService.getUser(request).getId();
+	//}
+	//pageContext.setAttribute("ultimoLogin", Usuario.getPenultimoLogin(id));
+	
+	pageContext.setAttribute("ultimoLogin", "");
 %>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -62,9 +70,11 @@
 					</li>
 				</ul>
 			
+				<!-- 
 				<div class="navbar-text pull-right"> 
-					Último login em: &nbsp;
+					Último login em: ${ultimoLogin}
 				</div>
+				-->
 			</div>
 			</mvc:checkLogged>
 		</div>
@@ -167,7 +177,7 @@ $(document).ready(function() {
 	var divNoticeP = divNotice.find("p");
 	if (divNoticeP.length > 0) divNotice.html(divNoticeP.text()).show();
 	
-	var url = window.location;
+	var url = window.location;	
     $('#menu > li > a[href="'+ url +'"]').parent().addClass('active');
     $('#menu > li > a').filter(function() {
          return this.href == url;

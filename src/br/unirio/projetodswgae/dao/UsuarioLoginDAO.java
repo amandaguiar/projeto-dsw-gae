@@ -71,6 +71,12 @@ public class UsuarioLoginDAO extends AbstractDAO<LoginUsuario>
 		List<LoginUsuario> logins = list(0, 1, exactFilter("idUsuario", FilterOperator.EQUAL, idUsuario), "timestamp", SortDirection.DESCENDING);
 		return (logins.size() > 0) ? logins.get(0).getTimestamp() : null;
 	}
+	
+	public Date pegaDataPenultimoLogin(int idUsuario)
+	{
+		List<LoginUsuario> logins = list(0, 2, exactFilter("idUsuario", FilterOperator.EQUAL, idUsuario), "timestamp", SortDirection.DESCENDING);
+		return (logins.size() > 0) ? logins.get(1).getTimestamp() : null;
+	}
 }
 
 class LoginUsuario implements DataObject

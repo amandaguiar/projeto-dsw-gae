@@ -1,6 +1,7 @@
 package br.unirio.projetodswgae.services;
 
 import br.unirio.projetodswgae.dao.DAOFactory;
+import br.unirio.projetodswgae.model.Usuario;
 import br.unirio.simplemvc.servlets.IUser;
 import br.unirio.simplemvc.servlets.IUserService;
 
@@ -41,4 +42,5 @@ public class ServicoAutenticacao implements IUserService
 	{
 		return "/login/preparaTrocaSenha.do";
 	}
+	
 }

@@ -33,4 +33,6 @@ public class ActionCommon extends Action
 
 		return ajaxSuccess(result);
 	}
+	
+	
 }
