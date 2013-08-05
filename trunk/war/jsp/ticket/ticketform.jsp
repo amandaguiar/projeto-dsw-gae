@@ -8,7 +8,7 @@ td { width: 350px; }
 
 <div id="content">
 	<c:set var="ticket" value="${requestScope.item}" scope="page" />
-	<c:set var="usuario" value="${requestScope.usuario}" scope="page" />
+	<c:set var="qtdecomentarios" value="${requestScope.qtdecomentarios}" scope="page" />
 	
 	<h3>Formulário de Ticket</h3>
 	
@@ -39,6 +39,7 @@ td { width: 350px; }
 			</tr>
 		
 		</table>
+<!-- 	Verifica se é um ticket novo -->
 		<c:if test="${ticket.id != -1}">	
 		<table>
 			<tr>
@@ -66,7 +67,37 @@ td { width: 350px; }
 		</c:if>
 		<br>
 		<input type="submit" name="btSubmit" value="Enviar Dados" class="btn btn-primary"/><br>
-	</form>	
+	</form>
+<!-- 	Area de comentarios dos tickets -->
+<!-- 	Verifica se é um ticket novo -->
+	<c:if test="${qtdecomentarios > 0}">
+		<table>
+			<tr>			
+				<th>Data</th>
+			  	<th>Status</th>		  
+			  	<th>Comentario</th>		
+			  	<th></th>					
+			</tr>
+			<tr>
+			<td colspan="2">
+				<hr class="divider" style="width:90%">
+			</td>
+			</tr>							
+			<c:forEach var="item" items="${requestScope.historico}">
+				<tr>				
+					<td>
+						<c:out value="${item.dataRegistro}"/>
+					</td>
+					<td>
+						<c:out value="${item.status}"/>&nbsp;
+					</td>
+					<td>
+						<c:out value="${item.comentario}"/>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</c:if>
 </div>
 
 <script src="/js/jquery/jquery.ui.min.js"></script>
