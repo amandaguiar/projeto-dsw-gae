@@ -35,7 +35,7 @@ public class ActionTicket extends Action{
 	 * Ação de salvamento de novos tickets
 	 */
 	@SuccessRedirect("/ticket/listaTickets.do")
-	@Error("/jsp/ticket/ticketform.jsp")
+	@Error(ACTION_DEPENDENT)
 	public String salvaTicket() throws ActionException
 	{
 		Usuario usuario = (Usuario) checkLogged();
@@ -58,15 +58,20 @@ public class ActionTicket extends Action{
 		if(!ticket.getComponente().isEmpty())
 			ticket.setEmailOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
 		
+		StatusTicket statusAntigo = ticket.getStatusAtual();
 		StatusTicket novoStatus = StatusTicket.get(getParameter("statusAtual", ""));
+		
+		setActionDependentURL("/ticket/editaTicket.do");
 		
 		/* verifica se é um ticket novo, senão é uma edição de ticket */
 		if (ticket.getId() <= 0)
 		{
+			setActionDependentURL("/jsp/ticket/ticketform.jsp");
 			ticket.setId_usuario(usuario.getId());
 			ticket.setIdentificador(String.valueOf(UUID.randomUUID()));
 		}
-		else if (novoStatus != null) {
+		/* altera o status atual caso tenha sido escolhido um novo status */
+		else if(statusAntigo != novoStatus){
 			ticket.setStatusAtual(novoStatus);
 		}
 		
@@ -76,6 +81,14 @@ public class ActionTicket extends Action{
 		checkNonEmpty(ticket.getSistema(), "O sistema não pode ser vazio.");		
 		checkNonEmpty(ticket.getComponente(), "O componente não pode ser vazio.");		
 
+		/* verifica se o novo status é Resolvido, Invalidado, Reaberto ou Fechado e se existe um comentário e se houve mudança de status */
+		if( (ticket.getStatusAtual() ==  StatusTicket.RESOLVIDO || ticket.getStatusAtual() == StatusTicket.INVALIDADO || 
+			 ticket.getStatusAtual() ==  StatusTicket.REABERTO || ticket.getStatusAtual() == StatusTicket.FECHADO)  &&
+			 ticket.getComentario().isEmpty() && 
+			 statusAntigo != novoStatus){
+			return addError("Para alterar o status do ticket, é necessário escrever um comentário.");
+		}
+		
 		// Salva os dados do ticket
 		DAOFactory.getTicketDAO().put(ticket);
 		
@@ -134,7 +147,7 @@ public class ActionTicket extends Action{
 	 * @param statusTicket
 	 */
 	public static void verificaRegrasStatus(String statusAtual, String tipoUsuario, List<String> statusTicket){
-		
+		statusTicket.add(statusAtual);
 		if( (tipoUsuario.equalsIgnoreCase(TipoUsuario.OPERADOR.getNome())) && 
 		    (statusAtual.equalsIgnoreCase(StatusTicket.NOVO.toString()) || statusAtual.equalsIgnoreCase(StatusTicket.REABERTO.toString())) ){
 			statusTicket.add(StatusTicket.RESOLVIDO.toString());
