@@ -39,10 +39,10 @@ public class ActionTicket extends Action{
 	public String salvaTicket() throws ActionException
 	{
 		Usuario usuario = (Usuario) checkLogged();
-		// Pega o identificador do usuário
+		// Pega o identificador do ticket
 		int id = getIntParameter("id", -1);
 
-		// Captura ou cria o usuário
+		// Captura ou cria o ticket
 		Ticket ticket = (id == -1) ? new Ticket() : DAOFactory.getTicketDAO().get(id);
 
 		// Disponibiliza os dados para o caso de erros
@@ -53,11 +53,11 @@ public class ActionTicket extends Action{
 		ticket.setDescricao(getParameter("descricao", ""));
 		ticket.setSistema(getParameter("sistema", ""));
 		ticket.setComponente(getParameter("componente", ""));
-		ticket.setComentario(getParameter("comentario", ""));
 		
 		if(!ticket.getComponente().isEmpty())
 			ticket.setEmailOperadorResponsavel(DAOFactory.getComponenteDAO().getComponenteEmailOperador(ticket));
 		
+		String comentario = getParameter("comentario", "");
 		StatusTicket statusAntigo = ticket.getStatusAtual();
 		StatusTicket novoStatus = StatusTicket.get(getParameter("statusAtual", ""));
 		
@@ -84,7 +84,7 @@ public class ActionTicket extends Action{
 		/* verifica se o novo status é Resolvido, Invalidado, Reaberto ou Fechado e se existe um comentário e se houve mudança de status */
 		if( (ticket.getStatusAtual() ==  StatusTicket.RESOLVIDO || ticket.getStatusAtual() == StatusTicket.INVALIDADO || 
 			 ticket.getStatusAtual() ==  StatusTicket.REABERTO || ticket.getStatusAtual() == StatusTicket.FECHADO)  &&
-			 ticket.getComentario().isEmpty() && 
+			 comentario.isEmpty() && 
 			 statusAntigo != novoStatus){
 			return addError("Para alterar o status do ticket, é necessário escrever um comentário.");
 		}
@@ -93,7 +93,7 @@ public class ActionTicket extends Action{
 		DAOFactory.getTicketDAO().put(ticket);
 		
 		//Salva os dados de status do ticket		
-		DAOFactory.getHistoricoStatusDAO().registraStatus(ticket.getId(), ticket.getStatusAtual(), ticket.getComentario());
+		DAOFactory.getHistoricoStatusDAO().registraStatus(ticket.getId(), ticket.getStatusAtual(), comentario);
 		
 		return addRedirectNotice("Ticket registrado com sucesso.");
 	}

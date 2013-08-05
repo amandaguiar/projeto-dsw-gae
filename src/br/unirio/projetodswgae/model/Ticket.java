@@ -12,7 +12,6 @@ public class Ticket implements DataObject{
 	private String componente;
 	private String descricao;	
 	private StatusTicket statusAtual;
-	private String comentario;
 	private String emailOperadorResponsavel;
 	
 	public Ticket() {
@@ -69,12 +68,6 @@ public class Ticket implements DataObject{
 	}
 	public void setStatusAtual(StatusTicket statusAtual) {
 		this.statusAtual = statusAtual;
-	}
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
-	public String getComentario() {
-		return comentario;
 	}
 	public String getEmailOperadorResponsavel() {
 		return emailOperadorResponsavel;

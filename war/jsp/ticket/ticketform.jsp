@@ -59,7 +59,7 @@ td { width: 350px; }
 			<tr>
 			<td colspan="2">
 				<label for="comentario">Comentário:</label>
-				<textarea rows="3" cols="2" style="width:85%" name="comentario" id="comentario">${ticket.comentario}</textarea>
+				<textarea rows="3" cols="2" style="width:85%" name="comentario" id="comentario"></textarea>
 			</td>
 			</tr>
 		</table>
