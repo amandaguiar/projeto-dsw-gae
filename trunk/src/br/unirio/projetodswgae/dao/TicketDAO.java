@@ -30,7 +30,6 @@ public class TicketDAO extends AbstractDAO<Ticket> {
 		ticket.setComponente(getStringProperty(e, "componente", ""));
 		ticket.setSistema(getStringProperty(e, "sistema", ""));		
 		ticket.setStatusAtual(StatusTicket.get(getStringProperty(e, "statusAtual", StatusTicket.NOVO.getCodigo())));
-		ticket.setComentario(getStringProperty(e, "comentario", ""));
 		ticket.setEmailOperadorResponsavel(getStringProperty(e, "operador", ""));
 		return ticket;
 	}
@@ -45,7 +44,6 @@ public class TicketDAO extends AbstractDAO<Ticket> {
 		e.setProperty("sistema", ticket.getSistema());
 		e.setProperty("componente", ticket.getComponente());		
 		e.setProperty("statusAtual", ticket.getStatusAtual().getCodigo());
-		e.setProperty("comentario", ticket.getComentario());
 		e.setProperty("emailOperadorResponsavel", ticket.getEmailOperadorResponsavel());
 	}
 	
